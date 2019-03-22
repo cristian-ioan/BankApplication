@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
-public class IOUtils {
+public class IOServices {
 
     private Scanner option;
 
-    public IOUtils() {
+    public IOServices() {
         option = new Scanner(System.in);
     }
 

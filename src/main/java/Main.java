@@ -1,18 +1,21 @@
+import java.io.IOException;
+
 public class Main {
 
     private LoginLogoutService loginLogoutService;
-    private IOUtils ioUtils;
-    private String user;
+    private IOServices ioServices;
+    private User user;
+    private String userNameOfAuthenticatedUser;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Main main = new Main();
         main.run();
     }
 
-    public Main() {
+    public Main() throws IOException {
         loginLogoutService = new LoginLogoutService();
         loginLogoutService.initializeMapUserPassword();
-        ioUtils = new IOUtils();
+        ioServices = new IOServices();
     }
 
     public void run() {
@@ -26,16 +29,17 @@ public class Main {
 
     private void LoginUser() {
 
-        ioUtils.showLoginConsole();
-        int option = ioUtils.readInteger();
+        ioServices.showLoginConsole();
+        int option = ioServices.readInteger();
 
         switch (option) {
             case 1:
                 System.out.print( "Enter username: " );
-                String username = ioUtils.readLine();
+                String username = ioServices.readLine();
                 System.out.print( "Enter password: " );
-                String password = ioUtils.readLine();
-                user = loginLogoutService.login(username, password);
+                String password = ioServices.readLine();
+                user = new User(username, password);
+                userNameOfAuthenticatedUser = loginLogoutService.login(user);
                 break;
             case 0:
                 System.exit(0);
@@ -46,8 +50,9 @@ public class Main {
                 break;
         }
 
-        if (user != null) {
-            System.out.println("Welcome " + user + " !");
+        if (userNameOfAuthenticatedUser != null) {
+            System.out.println("Welcome " + userNameOfAuthenticatedUser + " !");
+            userNameOfAuthenticatedUser = null;
         } else {
             System.out.println("Wrong username/password");
             LoginUser();
@@ -56,8 +61,8 @@ public class Main {
 
     private void LogoutUser() {
 
-        ioUtils.showLogoutConsole();
-        int option = ioUtils.readInteger();
+        ioServices.showLogoutConsole();
+        int option = ioServices.readInteger();
 
         switch (option) {
             case 1:

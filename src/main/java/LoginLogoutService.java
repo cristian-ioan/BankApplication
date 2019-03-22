@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -6,15 +7,13 @@ import java.util.Map;
 
 public class LoginLogoutService {
 
-    public static final String filePath = "D:/userpassword.txt";
+    private static final String filePath = "D:/userpassword.txt";
     private Map<String, String> userPasswordMap = new LinkedHashMap<String, String>();
 
-    public void initializeMapUserPassword() {
+    public void initializeMapUserPassword() throws IOException {
 
-        try {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split( "\\s" );
                 if (parts.length >= 2) {
@@ -25,22 +24,15 @@ public class LoginLogoutService {
                     System.out.println( "... ignoring line: " + line );
                 }
             }
-
-//            System.out.println( "The map is: " );
-//            for (String key : userPasswordMap.keySet()) {
-//                System.out.println( key + " : " + userPasswordMap.get(key));
-//            }
-
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public String login(String username, String password) {
-
+    public String login(User user) {
         for (String s : userPasswordMap.keySet()) {
-            if (s.equals(username) && userPasswordMap.get(s).equals(password)) {
-                return username;
+            if (s.equals(user.getUsername()) && userPasswordMap.get(s).equals(user.getPassword())) {
+                return user.getUsername();
             }
         }
         return null;
