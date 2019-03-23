@@ -1,3 +1,7 @@
+import constant.Constants;
+import service.IOServices;
+import user.User;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -27,14 +31,14 @@ public class LoginLogoutService {
 
     public void initializeMapUserPassword() throws IOException {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(Constants.filePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(Constants.FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split( "\\s" );
+                String[] parts = line.split(Constants.SPLIT_BY_SPACE );
                 if (parts.length >= 2) {
                     String key = parts[0];
                     String value = parts[1];
-                    userPasswordMap.put( key, value );
+                    userPasswordMap.put(key, value);
                 } else {
                     System.out.println( "... ignoring line: " + line );
                 }

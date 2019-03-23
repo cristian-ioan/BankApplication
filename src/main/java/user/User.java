@@ -1,7 +1,9 @@
+package user;
+
 public class User {
 
-    String username;
-    String password;
+    private String username;
+    private String password;
 
     public User() {
     }
@@ -48,7 +50,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "username='" + username + '\'' + ", password='" + password + '\'' + '}';
+        return "user.User{" + "username='" + username + '\'' + ", password='" + password + '\'' + '}';
     }
 
 }
