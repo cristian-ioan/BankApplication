@@ -33,7 +33,7 @@ public class ClassSingleton {
 
     public void initializeMapUserPassword() throws IOException {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader( Constants.FILE_PATH))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(Constants.FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(Constants.SPLIT_BY_SPACE );

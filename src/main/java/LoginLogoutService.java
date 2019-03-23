@@ -2,14 +2,14 @@ import service.IOServices;
 import user.User;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class LoginLogoutService {
 
     private IOServices ioServices = new IOServices();
     private User user;
-    private String userNameOfAuthenticatedUser;
+    private Optional<User> userNameOfAuthenticatedUser;
     private ClassSingleton classSingleton =  ClassSingleton.getInstance();
-
 
     public LoginLogoutService() throws IOException {
         classSingleton.initializeMapUserPassword();
@@ -46,8 +46,8 @@ public class LoginLogoutService {
                 break;
         }
 
-        if (userNameOfAuthenticatedUser != null) {
-            System.out.println("Welcome " + userNameOfAuthenticatedUser + " !");
+        if (userNameOfAuthenticatedUser.isPresent()) {
+            System.out.println("Welcome " + userNameOfAuthenticatedUser.get().getUsername() + " !");
             userNameOfAuthenticatedUser = null;
         } else {
             System.out.println("Wrong username/password");
@@ -62,7 +62,6 @@ public class LoginLogoutService {
         switch (option) {
             case 1:
                 logout();
-                user = null;
                 break;
             case 0:
                 System.exit(0);
@@ -74,18 +73,19 @@ public class LoginLogoutService {
         }
     }
 
-    public String verifyLogin(User user) {
+    public Optional<User> verifyLogin(User user) {
         for (String s : classSingleton.getUserPasswordMap().keySet()) {
             if (s.equals(user.getUsername()) &&
                     classSingleton.getUserPasswordMap().get(s).equals(user.getPassword())) {
-                return user.getUsername();
+                return Optional.of(user);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     public void logout() {
         System.out.println(user.getUsername() + " you are successfully logged out!");
+        user = null;
     }
 
 }
