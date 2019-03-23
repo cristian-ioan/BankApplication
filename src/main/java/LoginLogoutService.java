@@ -1,23 +1,18 @@
-import constant.Constants;
 import service.IOServices;
 import user.User;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class LoginLogoutService {
 
     private IOServices ioServices = new IOServices();
     private User user;
     private String userNameOfAuthenticatedUser;
-    private Map<String, String> userPasswordMap = new LinkedHashMap<>();
+    private ClassSingleton classSingleton =  ClassSingleton.getInstance();
+
 
     public LoginLogoutService() throws IOException {
-        initializeMapUserPassword();
+        classSingleton.initializeMapUserPassword();
     }
 
     public void run() {
@@ -27,25 +22,6 @@ public class LoginLogoutService {
             LogoutUser();
         }
         run();
-    }
-
-    public void initializeMapUserPassword() throws IOException {
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(Constants.FILE_PATH))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(Constants.SPLIT_BY_SPACE );
-                if (parts.length >= 2) {
-                    String key = parts[0];
-                    String value = parts[1];
-                    userPasswordMap.put(key, value);
-                } else {
-                    System.out.println( "... ignoring line: " + line );
-                }
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     private void LoginUser() {
@@ -87,7 +63,6 @@ public class LoginLogoutService {
             case 1:
                 logout();
                 user = null;
-                System.out.println("Successfully logout");
                 break;
             case 0:
                 System.exit(0);
@@ -100,8 +75,9 @@ public class LoginLogoutService {
     }
 
     public String verifyLogin(User user) {
-        for (String s : userPasswordMap.keySet()) {
-            if (s.equals(user.getUsername()) && userPasswordMap.get(s).equals(user.getPassword())) {
+        for (String s : classSingleton.getUserPasswordMap().keySet()) {
+            if (s.equals(user.getUsername()) &&
+                    classSingleton.getUserPasswordMap().get(s).equals(user.getPassword())) {
                 return user.getUsername();
             }
         }
@@ -109,7 +85,7 @@ public class LoginLogoutService {
     }
 
     public void logout() {
-        // do nothing
+        System.out.println(user.getUsername() + " you are successfully logged out!");
     }
 
 }
