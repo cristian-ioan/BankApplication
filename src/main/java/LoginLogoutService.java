@@ -6,12 +6,13 @@ import java.util.Optional;
 
 public class LoginLogoutService {
 
-    private IOServices ioServices = new IOServices();
+    private IOServices ioServices;
     private User user;
     private Optional<User> userNameOfAuthenticatedUser;
-    private ClassSingleton classSingleton =  ClassSingleton.getInstance();
+    private ClassSingleton classSingleton = ClassSingleton.getInstance();
 
     public LoginLogoutService() throws IOException {
+        ioServices = new IOServices();
         classSingleton.initializeMapUserPassword();
     }
 
