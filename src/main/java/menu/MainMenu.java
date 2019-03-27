@@ -1,25 +1,28 @@
 package menu;
 
-import file.ReadFromFileUsers;
-import util.LoginLogoutUser;
+import file.ReadFromAccountsFile;
+import file.ReadFromUsersFile;
+import util.UserLogin;
 
 import java.io.IOException;
 import java.util.logging.Logger;
 
 public class MainMenu {
 
-    private LoginLogoutUser loginLogoutUser;
-    private ReadFromFileUsers readFromFileUser = ReadFromFileUsers.getInstance();
+    private UserLogin userLogin;
+    private ReadFromUsersFile readFromUsersFile = ReadFromUsersFile.getInstance();
+    private ReadFromAccountsFile readFromAccountsFile = ReadFromAccountsFile.getInstance();
     private final static Logger loggerMenu = Logger.getLogger(Logger.class.getName());
 
     public MainMenu() throws IOException {
-        loginLogoutUser = new LoginLogoutUser();
-        readFromFileUser.initializeMapUserPassword();
+        userLogin = new UserLogin();
+        readFromUsersFile.initializeMapUserPassword();
+        readFromAccountsFile.initializeAccountList();
     }
 
-    public void showMainMenu() {
+    public void showMainMenu() throws IOException {
         loggerMenu.info("Welcome to Bank Application!");
-        loginLogoutUser.run();
+        userLogin.run();
     }
 
 }

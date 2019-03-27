@@ -10,18 +10,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class ReadFromFileUsers {
+public class ReadFromUsersFile {
 
-    private static ReadFromFileUsers instance;
+    private static ReadFromUsersFile instance;
     private Map<String, String> userPasswordMap = new LinkedHashMap<>();
     private final static Logger loggerReadFromFileUsers = Logger.getLogger(Logger.class.getName());
 
-    private ReadFromFileUsers() {
+    private ReadFromUsersFile() {
     }
 
-    public static synchronized ReadFromFileUsers getInstance() {
+    public static synchronized ReadFromUsersFile getInstance() {
         if(instance == null) {
-            instance = new ReadFromFileUsers();
+            instance = new ReadFromUsersFile();
         }
         return instance;
     }
@@ -36,7 +36,7 @@ public class ReadFromFileUsers {
 
     public void initializeMapUserPassword() throws IOException {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(Constant.FILE_PATH_USERS ))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(Constant.FILE_PATH_USERS))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split( Constant.SPLIT_BY_SPACE );

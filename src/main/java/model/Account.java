@@ -11,9 +11,9 @@ public class Account {
     private BigDecimal balance;
     private Currency currency;
 
-    public Account(String accountNumber, String username, BigDecimal balance, Currency currency) {
-        this.accountNumber = accountNumber;
+    public Account(String username, String accountNumber, BigDecimal balance, Currency currency) {
         this.username = username;
+        this.accountNumber = accountNumber;
         this.balance = balance;
         this.currency = currency;
     }
@@ -53,6 +53,7 @@ public class Account {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+        if (o == null) return false;
         if (!(o instanceof Account)) return false;
 
         Account account = (Account) o;
