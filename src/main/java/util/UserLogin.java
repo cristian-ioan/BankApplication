@@ -25,7 +25,6 @@ public class UserLogin {
     private Optional<User> userNameOfAuthenticatedUser;
     private final static Logger logger = Logger.getLogger(Logger.class.getName());
 
-
     public UserLogin(){
         ioService = new IOService();
         consoleMenu = new ConsoleMenu();
@@ -42,7 +41,7 @@ public class UserLogin {
         this.run();
     }
 
-    private void loginUser() throws IOException {
+    public void loginUser() throws IOException {
         consoleMenu.showLoginConsole();
         int option = ioService.readInteger();
 
@@ -93,7 +92,7 @@ public class UserLogin {
         }
     }
 
-    private void createOrDisplayUserBankAccount() throws IOException {
+    public void createOrDisplayUserBankAccount() throws IOException {
         consoleMenu.showUserBankAccountConsole(user);
         int option = ioService.readInteger();
 
@@ -114,26 +113,36 @@ public class UserLogin {
         }
     }
 
-    private void createUserBankAccount() throws IOException {
+    public void createUserBankAccount() throws IOException {
 
         logger.info( "Enter account number: " );
         String userBankAccount = ioService.readLine();
-        while (userBankAccount.length() != 24 || !userBankAccount.substring(0, 2).equals("RO")) {
-            logger.warning( "The length of account number must have 24 characters or " +
-                    "the account number should start with " + "RO." + " Please try again." );
-            logger.info( "Enter account number: " );
-            userBankAccount = ioService.readLine();
+        boolean isUserBankAccountValidated = false;
+        while (isUserBankAccountValidated == false){
+            if (userBankAccount.length() != 24){
+                logger.warning( "The length of account number must have 24 characters!");
+                logger.info( "Enter account number: " );
+                userBankAccount = ioService.readLine();
+            } else {
+                if (!userBankAccount.substring(0, 2).equals("RO")){
+                    logger.warning( "The account number should start with 'RO'." );
+                    logger.info( "Enter account number: " );
+                    userBankAccount = ioService.readLine();
+                } else {
+                    isUserBankAccountValidated = true;
+                }
+            }
         }
 
-        logger.info("Enter balance: ");
+        logger.info("Enter balance for account: ");
         BigDecimal balanceOfUserBankAccount = new BigDecimal(ioService.readInteger());
 
-        logger.info("Enter currency [RON/EURO]: ");
+        logger.info("Enter currency [RON/EUR]: ");
         String currencyTypeOfUserBankAccount = ioService.readLine();
         while (!currencyTypeOfUserBankAccount.substring(0, 3).equals(String.valueOf(Currency.RON)) &&
-                !currencyTypeOfUserBankAccount.substring(0, 4).equals(String.valueOf(Currency.EURO ))){
-            logger.warning("The currency must be 'RON' or 'EURO'!");
-            logger.info("Enter currency [RON/EURO]: ");
+                !currencyTypeOfUserBankAccount.substring(0, 3).equals(String.valueOf(Currency.EUR))){
+            logger.warning("The currency must be 'RON' or 'EUR'!");
+            logger.info("Enter currency [RON/EUR]: ");
             currencyTypeOfUserBankAccount = ioService.readLine();
         }
 
@@ -148,7 +157,7 @@ public class UserLogin {
         newAccount = null;
     }
 
-    private void showDetailsUserBankAccount() {
+    public void showDetailsUserBankAccount() {
         boolean isUserFound = false;
         for (Account account : ReadFromAccountsFile.getInstance().getAccountList()){
             if (user.getUserName().equals(account.getUsername())) {
