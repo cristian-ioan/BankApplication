@@ -35,9 +35,9 @@ public class UserLogin {
 
     public void run() throws IOException {
         if (user == null) {
-            this.loginUser();
+            loginUser();
         } else {
-            this.showUserBankAccountConsole();
+            showUserBankAccountConsole();
         }
         this.run();
     }
@@ -60,17 +60,17 @@ public class UserLogin {
                 break;
             default:
                 logger.warning("Not a valid option");
-                this.loginUser();
+                loginUser();
                 break;
         }
 
         if (userNameOfAuthenticatedUser.isPresent()) {
             logger.info("Welcome " + userNameOfAuthenticatedUser.get().getUserName() + " !");
-            this.showUserBankAccountConsole();
+            showUserBankAccountConsole();
             userNameOfAuthenticatedUser = null;
         } else {
             logger.warning("Wrong username/password");
-            this.loginUser();
+            loginUser();
         }
     }
 
@@ -80,7 +80,7 @@ public class UserLogin {
 
         switch (option) {
             case 1:
-                this.createOrDisplayUserBankAccount();
+                createOrDisplayUserBankAccount();
                 break;
             case 2:
                 logger.info(user.getUserName() + " you are successfully logged out!");
@@ -88,7 +88,7 @@ public class UserLogin {
                 break;
             default:
                 logger.warning("Not a valid option");
-                this.showUserBankAccountConsole();
+                showUserBankAccountConsole();
                 break;
         }
     }
@@ -100,35 +100,40 @@ public class UserLogin {
         switch (option) {
             case 1:
                 logger.info("Create a new account");
-                this.createUserBankAccount(user);
-                this.showUserBankAccountConsole();
+                createUserBankAccount();
+                showUserBankAccountConsole();
                 break;
             case 2:
-                this.showDetailsUserBankAccount();
-                this.showUserBankAccountConsole();
+                showDetailsUserBankAccount();
+                showUserBankAccountConsole();
                 break;
             default:
                 logger.warning("Not a valid option");
-                this.createOrDisplayUserBankAccount();
+                createOrDisplayUserBankAccount();
                 break;
         }
     }
 
-    private void createUserBankAccount(User user) throws IOException {
+    private void createUserBankAccount() throws IOException {
 
-        logger.info("Enter account number: ");
+        logger.info( "Enter account number: " );
         String userBankAccount = ioService.readLine();
-        this.validateBankAccountNumber(userBankAccount);
+        while (userBankAccount.length() != 24 || !userBankAccount.substring(0, 2).equals("RO")) {
+            logger.warning( "The length of account number must have 24 characters or " +
+                    "the account number should start with " + "RO." + " Please try again." );
+            logger.info( "Enter account number: " );
+            userBankAccount = ioService.readLine();
+        }
 
         logger.info("Enter balance: ");
         BigDecimal balanceOfUserBankAccount = new BigDecimal(ioService.readInteger());
 
-        logger.info("Enter currency [RON/EUR]: ");
+        logger.info("Enter currency [RON/EURO]: ");
         String currencyTypeOfUserBankAccount = ioService.readLine();
         while (!currencyTypeOfUserBankAccount.substring(0, 3).equals(String.valueOf(Currency.RON)) &&
-                !currencyTypeOfUserBankAccount.substring(0, 3).equals(String.valueOf(Currency.EUR))){
-            logger.warning("The currency must be 'RON' or 'EUR'!");
-            logger.info("Enter currency [RON/EUR]: ");
+                !currencyTypeOfUserBankAccount.substring(0, 4).equals(String.valueOf(Currency.EURO ))){
+            logger.warning("The currency must be 'RON' or 'EURO'!");
+            logger.info("Enter currency [RON/EURO]: ");
             currencyTypeOfUserBankAccount = ioService.readLine();
         }
 
@@ -141,18 +146,6 @@ public class UserLogin {
         logger.info("The bank account for " + user.getUserName() + " was successfully created!");
         addLineIntoAccountsFile = null;
         newAccount = null;
-    }
-
-    private void validateBankAccountNumber(String bankAccountNumber) throws IOException {
-        if (bankAccountNumber.length() != 24){
-            logger.warning("The length of account number must have 24 characters!");
-            this.createUserBankAccount(user);
-        } else {
-            if (!bankAccountNumber.substring(0, 2).equals("RO")){
-                logger.warning("The account number should start with " + "RO" + " !");
-                this.createUserBankAccount(user);
-            }
-        }
     }
 
     private void showDetailsUserBankAccount() {
