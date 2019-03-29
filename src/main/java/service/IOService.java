@@ -4,18 +4,22 @@ import java.util.Scanner;
 
 public class IOService {
 
-    private Scanner option;
+    private static IOService instance;
+    private IOService(){}
 
-    public IOService() {
-        option = new Scanner(System.in);
+    public static synchronized IOService getInstance(){
+        if (instance == null){
+            instance = new IOService();
+        }
+        return instance;
     }
 
     public int readInteger() {
-        return option.nextInt();
+        return new Scanner(System.in).nextInt();
     }
 
     public String readLine() {
-        return option.next();
+        return new Scanner(System.in).next();
     }
 
 }

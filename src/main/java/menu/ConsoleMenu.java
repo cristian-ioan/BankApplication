@@ -4,6 +4,16 @@ import model.User;
 
 public class ConsoleMenu {
 
+    private static ConsoleMenu instance;
+    private ConsoleMenu(){}
+
+    public static synchronized ConsoleMenu getInstance(){
+        if (instance == null){
+            instance = new ConsoleMenu();
+        }
+        return instance;
+    }
+
     public void showLoginConsole() {
         System.out.println();
         System.out.println("1. Login");

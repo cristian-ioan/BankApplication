@@ -1,7 +1,7 @@
 package file;
 
-import constant.Constant;
-import constant.Currency;
+import utils.FileUtils;
+import utils.Currency;
 import model.Account;
 
 import java.io.BufferedReader;
@@ -13,17 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class ReadFromAccountsFile {
+public class AccountReader {
 
-    private static ReadFromAccountsFile instance;
+    private static AccountReader instance;
     private List<Account> accountList = new ArrayList<>();
     private static final Logger loggerReadFromFileAccounts = Logger.getLogger(Logger.class.getName());
 
-    private ReadFromAccountsFile(){}
+    private AccountReader(){}
 
-    public static synchronized ReadFromAccountsFile getInstance(){
+    public static synchronized AccountReader getInstance(){
         if (instance == null){
-            instance = new ReadFromAccountsFile();
+            instance = new AccountReader();
         }
         return instance;
     }
@@ -38,11 +38,11 @@ public class ReadFromAccountsFile {
 
     public void initializeAccountList() throws IOException {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(Constant.FILE_PATH_ACCOUNTS))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader( FileUtils.FILE_PATH_ACCOUNTS))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split( Constant.SPLIT_BY_SPACE );
-                if (parts.length >= 4) {
+                String[] parts = line.split( FileUtils.SPLIT_BY_SPACE );
+                if (parts.length >= FileUtils.NUMBER_OF_COLUMNS) {
                     String userName = parts[0];
                     String accountNumber = parts[1];
                     BigDecimal balance = new BigDecimal(parts[2]);

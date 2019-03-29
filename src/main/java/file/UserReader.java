@@ -1,6 +1,6 @@
 package file;
 
-import constant.Constant;
+import utils.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -10,18 +10,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class ReadFromUsersFile {
+public class UserReader {
 
-    private static ReadFromUsersFile instance;
+    private static UserReader instance;
     private Map<String, String> userPasswordMap = new LinkedHashMap<>();
     private final static Logger loggerReadFromFileUsers = Logger.getLogger(Logger.class.getName());
 
-    private ReadFromUsersFile() {
+    private UserReader() {
     }
 
-    public static synchronized ReadFromUsersFile getInstance() {
+    public static synchronized UserReader getInstance() {
         if(instance == null) {
-            instance = new ReadFromUsersFile();
+            instance = new UserReader();
         }
         return instance;
     }
@@ -36,10 +36,10 @@ public class ReadFromUsersFile {
 
     public void initializeMapUserPassword() throws IOException {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(Constant.FILE_PATH_USERS))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader( FileUtils.FILE_PATH_USERS))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split( Constant.SPLIT_BY_SPACE );
+                String[] parts = line.split( FileUtils.SPLIT_BY_SPACE );
                 if (parts.length >= 2) {
                     String key = parts[0];
                     String value = parts[1];

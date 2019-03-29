@@ -1,6 +1,6 @@
 package model;
 
-import constant.Currency;
+import utils.Currency;
 
 import java.math.BigDecimal;
 

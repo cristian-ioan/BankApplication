@@ -1,4 +1,4 @@
-package constant;
+package utils;
 
 public enum Currency {
     RON, EUR;
