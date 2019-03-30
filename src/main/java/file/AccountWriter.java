@@ -10,14 +10,14 @@ import java.util.logging.Logger;
 
 public class AccountWriter {
 
-    private static final Logger loggerWriteToFileAccounts = Logger.getLogger(Logger.class.getName());
+    private static final Logger LOG = Logger.getLogger(Logger.class.getName());
 
     public void writeStringToFile(String line) throws IOException {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter( FileUtils.FILE_PATH_ACCOUNTS,
                 true))) {
             bufferedWriter.write(line);
         } catch (FileNotFoundException e){
-            loggerWriteToFileAccounts.warning("File not found!");
+            LOG.warning("File not found!");
         }
     }
 

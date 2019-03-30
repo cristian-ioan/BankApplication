@@ -17,7 +17,7 @@ public class AccountReader {
 
     private static AccountReader instance;
     private List<Account> accountList = new ArrayList<>();
-    private static final Logger loggerReadFromFileAccounts = Logger.getLogger(Logger.class.getName());
+    private static final Logger LOG = Logger.getLogger(Logger.class.getName());
 
     private AccountReader(){}
 
@@ -50,11 +50,11 @@ public class AccountReader {
                     Account account = new Account(userName, accountNumber, balance, Currency.valueOf(currency));
                     accountList.add(account);
                 } else {
-                    loggerReadFromFileAccounts.warning("... ignoring line: " + line);
+                    LOG.warning("... ignoring line: " + line);
                 }
             }
         } catch (FileNotFoundException e) {
-            loggerReadFromFileAccounts.warning("File not found!");
+            LOG.warning("File not found!");
         }
     }
 }

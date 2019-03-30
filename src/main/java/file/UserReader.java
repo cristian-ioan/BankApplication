@@ -14,7 +14,7 @@ public class UserReader {
 
     private static UserReader instance;
     private Map<String, String> userPasswordMap = new LinkedHashMap<>();
-    private final static Logger loggerReadFromFileUsers = Logger.getLogger(Logger.class.getName());
+    private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
     private UserReader() {
     }
@@ -45,11 +45,11 @@ public class UserReader {
                     String value = parts[1];
                     userPasswordMap.put(key, value);
                 } else {
-                    loggerReadFromFileUsers.warning("... ignoring line: " + line);
+                    LOG.warning("... ignoring line: " + line);
                 }
             }
         } catch (FileNotFoundException e) {
-            loggerReadFromFileUsers.warning("File not found!");
+            LOG.warning("File not found!");
         }
     }
 }
