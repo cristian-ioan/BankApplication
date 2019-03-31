@@ -54,7 +54,7 @@ public class AccountReader {
                 }
             }
         } catch (FileNotFoundException e) {
-            LOG.warning("File not found!");
+            LOG.warning("File not found: " + e.getMessage());
         }
     }
 }

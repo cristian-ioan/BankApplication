@@ -34,7 +34,7 @@ public class UserLogin {
         } else {
             consoleAccount.showUserBankAccountConsole(user);
         }
-        this.run();
+        run();
     }
 
     public void loginUser() throws IOException {

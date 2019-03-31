@@ -2,6 +2,7 @@ package menu;
 
 import model.User;
 import service.AccountCreate;
+import service.DetailsBankAccount;
 import service.IOService;
 import service.UserLogin;
 
@@ -21,6 +22,7 @@ public class ConsoleAccount {
     }
 
     private AccountCreate accountCreate = new AccountCreate();
+    private DetailsBankAccount detailsBankAccount = new DetailsBankAccount();
     private static final Logger LOG = Logger.getLogger(Logger.class.getName());
 
     public void showUserBankAccountConsole(User user) throws IOException {
@@ -53,7 +55,7 @@ public class ConsoleAccount {
                 showUserBankAccountConsole(user);
                 break;
             case 2:
-                accountCreate.showDetailsUserBankAccount(user);
+                detailsBankAccount.showDetailsUserBankAccount(user);
                 showUserBankAccountConsole(user);
                 break;
             default:

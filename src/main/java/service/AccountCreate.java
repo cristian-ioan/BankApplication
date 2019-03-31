@@ -71,30 +71,13 @@ public class AccountCreate {
     public String validateCurrencyType(){
         LOG.info("Enter currency [RON/EUR]: ");
         String currencyTypeOfUserBankAccount = IOService.getInstance().readLine();
-        while (!currencyTypeOfUserBankAccount.substring(0, 3).equals(String.valueOf( Currency.RON)) &&
+        while (!currencyTypeOfUserBankAccount.substring(0, 3).equals(String.valueOf(Currency.RON)) &&
                 !currencyTypeOfUserBankAccount.substring(0, 3).equals(String.valueOf(Currency.EUR))){
             LOG.warning("The currency must be 'RON' or 'EUR'!");
             LOG.info("Enter currency [RON/EUR]: ");
             currencyTypeOfUserBankAccount = IOService.getInstance().readLine();
         }
         return currencyTypeOfUserBankAccount;
-    }
-
-    public void showDetailsUserBankAccount(User user) {
-        boolean isUserFound = false;
-        for (Account account : AccountReader.getInstance().getAccountList()){
-            if (user.getUserName().equals(account.getUsername())) {
-                isUserFound = true;
-                String bankAccountUser = String.valueOf(account.getAccountNumber());
-                String balanceOfUserBankAccount = String.valueOf(account.getBalance());
-                String currencyType = String.valueOf(account.getCurrency());
-                LOG.info("account: " + bankAccountUser + " balance: " + balanceOfUserBankAccount
-                        + " currency: " + currencyType);
-            }
-        }
-        if (isUserFound == false) {
-            LOG.info( user.getUserName() + " does not have any bank account." );
-        }
     }
 
 }

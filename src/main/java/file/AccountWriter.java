@@ -17,7 +17,7 @@ public class AccountWriter {
                 true))) {
             bufferedWriter.write(line);
         } catch (FileNotFoundException e){
-            LOG.warning("File not found!");
+            LOG.warning("File not found: " + e.getMessage());
         }
     }
 
