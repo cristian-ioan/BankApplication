@@ -1,7 +1,6 @@
 package menu;
 
-import file.AccountReader;
-import file.UserReader;
+import file.FileReader;
 import service.UserLogin;
 
 import java.io.IOException;
@@ -9,15 +8,14 @@ import java.util.logging.Logger;
 
 public class MainMenu {
 
-    private UserReader userReader = UserReader.getInstance();
-    private AccountReader accountReader = AccountReader.getInstance();
+    private FileReader fileReader = FileReader.getInstance();
     private UserLogin userLogin = UserLogin.getInstance();
 
-    private final static Logger LOG = Logger.getLogger(Logger.class.getName());
+    private static final Logger LOG = Logger.getLogger(Logger.class.getName());
 
     public MainMenu() throws IOException {
-        userReader.initializeMapUserPassword();
-        accountReader.initializeAccountList();
+        fileReader.initializeMapUserPassword();
+        fileReader.initializeAccountList();
     }
 
     public void showMainMenu() throws IOException {

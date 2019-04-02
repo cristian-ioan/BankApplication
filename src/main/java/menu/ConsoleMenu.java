@@ -32,6 +32,7 @@ public class ConsoleMenu {
         System.out.println();
         System.out.println("1. Create a new bank account for: " + user.getUserName());
         System.out.println("2. Display details about bank accounts for: " + user.getUserName());
+        System.out.println("3. Transfer money between accounts for: " + user.getUserName());
         System.out.print("Select menu option: ");
     }
 

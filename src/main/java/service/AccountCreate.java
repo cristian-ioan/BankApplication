@@ -1,7 +1,7 @@
 package service;
 
-import file.AccountReader;
 import file.AccountWriter;
+import file.FileReader;
 import model.Account;
 import model.User;
 import utils.Currency;
@@ -29,7 +29,8 @@ public class AccountCreate {
 
         newAccount = new Account(user.getUserName(),
                 iban, balanceOfUserBankAccount, Currency.valueOf(currencyTypeOfUserBankAccount));
-        AccountReader.getInstance().getAccountList().add((newAccount));
+        AccountUser.getInstance().getUserAccountList().add(newAccount);
+        FileReader.getInstance().getAccountList().add((newAccount));
         addLineIntoAccountsFile = "\n" + user.getUserName() + " " + iban + " "
                 + balanceOfUserBankAccount.toString() + " " + currencyTypeOfUserBankAccount;
         accountWriter.writeStringToFile(addLineIntoAccountsFile);
