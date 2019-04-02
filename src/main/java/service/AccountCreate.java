@@ -1,9 +1,10 @@
 package service;
 
 import file.AccountWriter;
-import file.FileReader;
+import menu.ConsoleAccount;
 import model.Account;
 import model.User;
+import model.UserAccountCollections;
 import utils.Currency;
 
 import java.io.IOException;
@@ -27,10 +28,12 @@ public class AccountCreate {
 
         String currencyTypeOfUserBankAccount = validateCurrencyType();
 
+
         newAccount = new Account(user.getUserName(),
                 iban, balanceOfUserBankAccount, Currency.valueOf(currencyTypeOfUserBankAccount));
-        AccountUser.getInstance().getUserAccountList().add(newAccount);
-        FileReader.getInstance().getAccountList().add((newAccount));
+        ConsoleAccount.getInstance().getUserAccountsList(user).add(newAccount);
+        UserAccountCollections.getInstance().getAccountList().add((newAccount));
+
         addLineIntoAccountsFile = "\n" + user.getUserName() + " " + iban + " "
                 + balanceOfUserBankAccount.toString() + " " + currencyTypeOfUserBankAccount;
         accountWriter.writeStringToFile(addLineIntoAccountsFile);

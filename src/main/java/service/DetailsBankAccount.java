@@ -1,5 +1,6 @@
 package service;
 
+import menu.ConsoleAccount;
 import model.Account;
 import model.User;
 
@@ -11,15 +12,15 @@ public class DetailsBankAccount {
 
     public void showDetailsUserBankAccount(User user) {
 
-        if (AccountUser.getInstance().getUserAccountList().isEmpty()){
+        if (ConsoleAccount.getInstance().getUserAccountsList( user ).isEmpty()) {
             LOG.info( user.getUserName() + " does not have any bank account." );
         } else {
-            for( Account account : AccountUser.getInstance().getUserAccountList()){
-                String bankAccountUser = String.valueOf(account.getAccountNumber());
-                String balanceOfUserBankAccount = String.valueOf(account.getBalance());
-                String currencyType = String.valueOf(account.getCurrency());
-                LOG.info("account: " + bankAccountUser + " balance: " + balanceOfUserBankAccount
-                        + " currency: " + currencyType);
+            for (Account account : ConsoleAccount.getInstance().getUserAccountsList( user )) {
+                String bankAccountUser = String.valueOf( account.getAccountNumber() );
+                String balanceOfUserBankAccount = String.valueOf( account.getBalance() );
+                String currencyType = String.valueOf( account.getCurrency() );
+                LOG.info( "account: " + bankAccountUser + " balance: " +
+                        balanceOfUserBankAccount + " currency: " + currencyType );
             }
         }
 

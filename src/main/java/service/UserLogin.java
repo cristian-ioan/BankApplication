@@ -15,7 +15,6 @@ public class UserLogin {
     private IOService ioService = IOService.getInstance();
     private ConsoleMenu consoleMenu = ConsoleMenu.getInstance();
     private ConsoleAccount consoleAccount = ConsoleAccount.getInstance();
-    private AccountUser accountUser = AccountUser.getInstance();
     private static final Logger LOG = Logger.getLogger(Logger.class.getName());
     private UserValidate userValidate = new UserValidate();
 
@@ -70,7 +69,6 @@ public class UserLogin {
 
         if (userNameOfAuthenticatedUser.isPresent()) {
             LOG.info("Welcome " + userNameOfAuthenticatedUser.get().getUserName() + " !");
-            accountUser.getUserAccount(user);
             consoleAccount.showUserBankAccountConsole(user);
             userNameOfAuthenticatedUser = null;
         } else {
