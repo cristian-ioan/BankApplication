@@ -15,7 +15,7 @@ public class FileReader {
 
         List<String> lines = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new java.io.FileReader( filePath))) {
+        try (BufferedReader reader = new BufferedReader(new java.io.FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 lines.add(line);

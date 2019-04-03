@@ -21,7 +21,7 @@ public class ConsoleAccount {
     }
 
     private AccountCreate accountCreate = new AccountCreate();
-    private AccountUser accountUser = new AccountUser();
+//    private AccountUser accountUser = new AccountUser();
     private DetailsBankAccount detailsBankAccount = new DetailsBankAccount();
     private static final Logger LOG = Logger.getLogger(Logger.class.getName());
 
@@ -35,7 +35,7 @@ public class ConsoleAccount {
                 break;
             case 2:
                 LOG.info(user.getUserName() + " you are successfully logged out!");
-                accountUser.setUserAccountListEmpty();
+                AccountUser.setUserAccountListEmpty();
                 UserLogin.getInstance().loginUser();
                 break;
             default:
@@ -60,17 +60,13 @@ public class ConsoleAccount {
                 showUserBankAccountConsole(user);
                 break;
             case 3:
-                //TODO implement transfer money btw same type accounts
+                detailsBankAccount.transferMoneyBetweenUserAccounts(user);
                 break;
             default:
                 LOG.warning("Not a valid option");
                 createOrDisplayUserBankAccount(user);
                 break;
         }
-    }
-
-    public List<Account> getUserAccountsList(User user){
-        return accountUser.getUserAccount(user);
     }
 
 }

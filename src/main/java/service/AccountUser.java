@@ -1,6 +1,5 @@
 package service;
 
-import file.FileReader;
 import model.Account;
 import model.User;
 import model.UserAccountCollections;
@@ -10,17 +9,9 @@ import java.util.List;
 
 public class AccountUser {
 
-    private List<Account> userAccountList = new ArrayList<>();
+    private static List<Account> userAccountList = new ArrayList<>();
 
-    public List<Account> getUserAccountList() {
-        return userAccountList;
-    }
-
-    public void setUserAccountList(List<Account> userAccountList) {
-        this.userAccountList = userAccountList;
-    }
-
-    public List<Account> getUserAccount(User user) {
+    public static List<Account> getUserAccount(User user) {
         userAccountList.clear();
         for (Account account : UserAccountCollections.getInstance().getAccountList()) {
             if (user.getUserName().equals(account.getUsername())) {
@@ -31,7 +22,11 @@ public class AccountUser {
         return userAccountList;
     }
 
-    public void setUserAccountListEmpty(){
+    public static List<Account> getUserAccountsList(User user){
+        return AccountUser.getUserAccount(user);
+    }
+
+    public static void setUserAccountListEmpty(){
         userAccountList.clear();
     }
 

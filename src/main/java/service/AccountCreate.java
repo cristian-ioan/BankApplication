@@ -1,6 +1,6 @@
 package service;
 
-import file.AccountWriter;
+import file.FileWriter;
 import menu.ConsoleAccount;
 import model.Account;
 import model.User;
@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 public class AccountCreate {
 
-    private AccountWriter accountWriter = new AccountWriter();
+    private FileWriter fileWriter = new FileWriter();
     private Account newAccount;
     private String addLineIntoAccountsFile;
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
@@ -31,12 +31,13 @@ public class AccountCreate {
 
         newAccount = new Account(user.getUserName(),
                 iban, balanceOfUserBankAccount, Currency.valueOf(currencyTypeOfUserBankAccount));
-        ConsoleAccount.getInstance().getUserAccountsList(user).add(newAccount);
+        AccountUser.getUserAccountsList(user).add(newAccount);
         UserAccountCollections.getInstance().getAccountList().add((newAccount));
 
         addLineIntoAccountsFile = "\n" + user.getUserName() + " " + iban + " "
                 + balanceOfUserBankAccount.toString() + " " + currencyTypeOfUserBankAccount;
-        accountWriter.writeStringToFile(addLineIntoAccountsFile);
+        fileWriter.writeStringToFile(addLineIntoAccountsFile);
+        
         LOG.info("The bank account for " + user.getUserName() + " was successfully created!");
         addLineIntoAccountsFile = null;
         newAccount = null;

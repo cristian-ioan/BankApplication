@@ -4,17 +4,16 @@ import utils.FileUtils;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class AccountWriter {
+public class FileWriter {
 
     private static final Logger LOG = Logger.getLogger(Logger.class.getName());
 
     public void writeStringToFile(String line) throws IOException {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter( FileUtils.FILE_PATH_ACCOUNTS,
-                true))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter
+                (new java.io.FileWriter(FileUtils.FILE_PATH_ACCOUNTS, true))) {
             bufferedWriter.write(line);
         } catch (FileNotFoundException e){
             LOG.warning("File not found: " + e.getMessage());
