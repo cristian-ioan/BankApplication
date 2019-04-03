@@ -1,7 +1,6 @@
 package service;
 
 import file.FileWriter;
-import menu.ConsoleAccount;
 import model.Account;
 import model.User;
 import model.UserAccountCollections;

@@ -1,11 +1,9 @@
 package menu;
 
-import model.Account;
 import model.User;
 import service.*;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class ConsoleAccount {
@@ -21,7 +19,6 @@ public class ConsoleAccount {
     }
 
     private AccountCreate accountCreate = new AccountCreate();
-//    private AccountUser accountUser = new AccountUser();
     private DetailsBankAccount detailsBankAccount = new DetailsBankAccount();
     private static final Logger LOG = Logger.getLogger(Logger.class.getName());
 
