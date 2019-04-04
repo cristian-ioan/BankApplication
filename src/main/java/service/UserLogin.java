@@ -2,6 +2,7 @@ package service;
 
 import menu.ConsoleMenu;
 import menu.ConsoleAccount;
+import model.Account;
 import model.User;
 
 import java.io.IOException;
@@ -69,6 +70,7 @@ public class UserLogin {
 
         if (userNameOfAuthenticatedUser.isPresent()) {
             LOG.info("Welcome " + userNameOfAuthenticatedUser.get().getUserName() + " !");
+            buildAccountList(user);
             consoleAccount.showUserBankAccountConsole(user);
             userNameOfAuthenticatedUser = null;
         } else {
@@ -76,5 +78,14 @@ public class UserLogin {
             loginUser();
         }
     }
+
+    private void buildAccountList(User user) {
+        for (Account account : AccountUser.getUserAccountsList(user)) {
+            user.getAccounts().add(account);
+        }
+    }
+
+
+
 
 }

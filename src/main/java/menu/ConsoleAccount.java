@@ -19,7 +19,7 @@ public class ConsoleAccount {
     }
 
     private AccountCreate accountCreate = new AccountCreate();
-    private DetailsBankAccount detailsBankAccount = new DetailsBankAccount();
+    private UserAccountsTransfer userAccountsTransfer = new UserAccountsTransfer();
     private static final Logger LOG = Logger.getLogger(Logger.class.getName());
 
     public void showUserBankAccountConsole(User user) throws IOException {
@@ -33,6 +33,7 @@ public class ConsoleAccount {
             case 2:
                 LOG.info(user.getUserName() + " you are successfully logged out!");
                 AccountUser.setUserAccountListEmpty();
+                user.setAccounts(null);
                 UserLogin.getInstance().loginUser();
                 break;
             default:
@@ -53,11 +54,12 @@ public class ConsoleAccount {
                 showUserBankAccountConsole(user);
                 break;
             case 2:
-                detailsBankAccount.showDetailsUserBankAccount(user);
+                DetailsBankAccount.showDetailsUserBankAccount(user);
                 showUserBankAccountConsole(user);
                 break;
             case 3:
-                detailsBankAccount.transferMoneyBetweenUserAccounts(user);
+
+                userAccountsTransfer.transferMoneyBetweenUserAccounts(user);
                 break;
             default:
                 LOG.warning("Not a valid option");

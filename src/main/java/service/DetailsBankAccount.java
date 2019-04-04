@@ -9,23 +9,22 @@ public class DetailsBankAccount {
 
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
-    public void showDetailsUserBankAccount(User user) {
+    public static void showDetailsUserBankAccount(User user) {
 
-        if (AccountUser.getUserAccountsList( user ).isEmpty()) {
+        if (user.getAccounts().isEmpty()) {
             LOG.info( user.getUserName() + " does not have any bank account." );
         } else {
-            for (Account account : AccountUser.getUserAccountsList( user )) {
-                String bankAccountUser = String.valueOf( account.getAccountNumber() );
+            int currentNumber = 0;
+            for (Account account : user.getAccounts()) {
+                currentNumber++;
+                String bankAccountUser = String.valueOf( account.getAccountNumber());
                 String balanceOfUserBankAccount = String.valueOf( account.getBalance() );
                 String currencyType = String.valueOf( account.getCurrency() );
-                LOG.info( "account: " + bankAccountUser + " balance: " +
-                        balanceOfUserBankAccount + " currency: " + currencyType );
+                LOG.info( "current number: " + currentNumber + " account: " +
+                        bankAccountUser + " balance: " + balanceOfUserBankAccount +
+                        " currency: " + currencyType );
             }
         }
-
-    }
-
-    public void transferMoneyBetweenUserAccounts(User user){
 
     }
 }

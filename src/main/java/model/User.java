@@ -1,13 +1,18 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
     private String userName;
     private String userPassword;
+    private List<Account> accounts;
 
     public User(String userName, String userPassword) {
         this.userName = userName;
         this.userPassword = userPassword;
+        accounts = new ArrayList<>();
     }
 
     public String getUserName() {
@@ -24,6 +29,14 @@ public class User {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     @Override

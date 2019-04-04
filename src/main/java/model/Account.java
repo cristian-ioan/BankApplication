@@ -6,12 +6,14 @@ import java.math.BigDecimal;
 
 public class Account {
 
-    private String accountNumber;
+    private int id;
     private String username;
+    private String accountNumber;
     private BigDecimal balance;
     private Currency currency;
 
-    public Account(String username, String accountNumber, BigDecimal balance, Currency currency) {
+    public Account(int id, String username, String accountNumber, BigDecimal balance, Currency currency) {
+        this.id = id;
         this.username = username;
         this.accountNumber = accountNumber;
         this.balance = balance;
@@ -50,6 +52,14 @@ public class Account {
         this.currency = currency;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,23 +68,29 @@ public class Account {
 
         Account account = (Account) o;
 
-        if (!getAccountNumber().equals( account.getAccountNumber() )) return false;
-        if (!getUsername().equals( account.getUsername() )) return false;
-        if (!getBalance().equals( account.getBalance() )) return false;
+        if (getId() != account.getId()) return false;
+        if (getAccountNumber() != null ? !getAccountNumber().equals( account.getAccountNumber() ) : account.getAccountNumber() != null)
+            return false;
+        if (getUsername() != null ? !getUsername().equals( account.getUsername() ) : account.getUsername() != null)
+            return false;
+        if (getBalance() != null ? !getBalance().equals( account.getBalance() ) : account.getBalance() != null)
+            return false;
         return getCurrency() == account.getCurrency();
+
     }
 
     @Override
     public int hashCode() {
-        int result = getAccountNumber().hashCode();
-        result = 31 * result + getUsername().hashCode();
-        result = 31 * result + getBalance().hashCode();
-        result = 31 * result + getCurrency().hashCode();
+        int result = getId();
+        result = 31 * result + (getAccountNumber() != null ? getAccountNumber().hashCode() : 0);
+        result = 31 * result + (getUsername() != null ? getUsername().hashCode() : 0);
+        result = 31 * result + (getBalance() != null ? getBalance().hashCode() : 0);
+        result = 31 * result + (getCurrency() != null ? getCurrency().hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Account{" + "accountNumber='" + accountNumber + '\'' + ", username='" + username + '\'' + ", balance=" + balance + ", currency=" + currency + '}';
+        return "Account{" + "id=" + id + ", username='" + username + '\'' + ", accountNumber='" + accountNumber + '\'' + ", balance=" + balance + ", currency=" + currency + '}';
     }
 }

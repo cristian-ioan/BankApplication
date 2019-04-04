@@ -2,10 +2,9 @@ package service;
 
 import model.Account;
 import model.User;
-import model.UserAccountCollections;
+import model.UserAccountInitialization;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class AccountUser {
 
@@ -13,9 +12,9 @@ public class AccountUser {
 
     public static List<Account> getUserAccount(User user) {
         userAccountList.clear();
-        for (Account account : UserAccountCollections.getInstance().getAccountList()) {
+        for (Account account : UserAccountInitialization.getInstance().getAccountList()) {
             if (user.getUserName().equals(account.getUsername())) {
-                userAccountList.add(new Account( account.getUsername(), account.getAccountNumber(),
+                userAccountList.add(new Account( account.getId(), account.getUsername(), account.getAccountNumber(),
                         account.getBalance(), account.getCurrency()));
             }
         }
@@ -28,6 +27,10 @@ public class AccountUser {
 
     public static void setUserAccountListEmpty(){
         userAccountList.clear();
+    }
+
+    public static int getSizeOfUserAccountList(){
+        return UserAccountInitialization.getInstance().getAccountList().size();
     }
 
 }

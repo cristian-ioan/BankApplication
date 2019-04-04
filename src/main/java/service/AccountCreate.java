@@ -3,7 +3,7 @@ package service;
 import file.FileWriter;
 import model.Account;
 import model.User;
-import model.UserAccountCollections;
+import model.UserAccountInitialization;
 import utils.Currency;
 
 import java.io.IOException;
@@ -27,16 +27,18 @@ public class AccountCreate {
 
         String currencyTypeOfUserBankAccount = validateCurrencyType();
 
+        int newId = AccountUser.getSizeOfUserAccountList() +1 ;
 
-        newAccount = new Account(user.getUserName(),
+        newAccount = new Account(newId, user.getUserName(),
                 iban, balanceOfUserBankAccount, Currency.valueOf(currencyTypeOfUserBankAccount));
         AccountUser.getUserAccountsList(user).add(newAccount);
-        UserAccountCollections.getInstance().getAccountList().add((newAccount));
+        user.getAccounts().add(newAccount);
+        UserAccountInitialization.getInstance().getAccountList().add((newAccount));
 
         addLineIntoAccountsFile = "\n" + user.getUserName() + " " + iban + " "
                 + balanceOfUserBankAccount.toString() + " " + currencyTypeOfUserBankAccount;
         fileWriter.writeStringToFile(addLineIntoAccountsFile);
-        
+
         LOG.info("The bank account for " + user.getUserName() + " was successfully created!");
         addLineIntoAccountsFile = null;
         newAccount = null;

@@ -12,20 +12,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class UserAccountCollections implements UserAccount {
+public class UserAccountInitialization implements UserAccount {
 
-    private static UserAccountCollections instance;
+    private static UserAccountInitialization instance;
     private FileReader fileReader = new FileReader();
     private  Map<String, String> userPasswordMap = new LinkedHashMap<>();
     private List<Account> accountList = new ArrayList<>();
     private static final Logger LOG = Logger.getLogger(Logger.class.getName());
 
-    private UserAccountCollections(){
+    private UserAccountInitialization(){
     }
 
-    public static synchronized UserAccountCollections getInstance() {
+    public static synchronized UserAccountInitialization getInstance() {
         if (instance == null) {
-            instance = new UserAccountCollections();
+            instance = new UserAccountInitialization();
         }
         return instance;
     }
@@ -36,6 +36,10 @@ public class UserAccountCollections implements UserAccount {
 
     public List<Account> getAccountList() {
         return accountList;
+    }
+
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
     }
 
     @Override
@@ -60,15 +64,17 @@ public class UserAccountCollections implements UserAccount {
     public void initializeAccountList() throws IOException {
 
         List<String> listStrings = fileReader.readFromFile(FileUtils.FILE_PATH_ACCOUNTS);
+        int id = 0;
 
         for (String line : listStrings){
             String[] parts = line.split( FileUtils.SPLIT_BY_SPACE );
             if (parts.length >= FileUtils.NUMBER_OF_COLUMNS_ACCOUNTS) {
+                id++;
                 String userName = parts[0];
                 String accountNumber = parts[1];
                 BigDecimal balance = new BigDecimal(parts[2]);
                 String currency = parts[3];
-                Account account = new Account(userName, accountNumber, balance,
+                Account account = new Account(id, userName, accountNumber, balance,
                         Currency.valueOf(currency));
                 accountList.add(account);
             } else {
