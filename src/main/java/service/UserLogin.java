@@ -4,6 +4,7 @@ import menu.ConsoleMenu;
 import menu.ConsoleAccount;
 import model.Account;
 import model.User;
+import model.UserAccountInitialization;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -80,12 +81,11 @@ public class UserLogin {
     }
 
     private void buildAccountList(User user) {
-        for (Account account : AccountUser.getUserAccountsList(user)) {
-            user.getAccounts().add(account);
+        for (Account account : UserAccountInitialization.getInstance().getAccountList()) {
+            if (user.getUserName().equals( account.getUsername() )) {
+                user.getAccounts().add( account );
+            }
         }
     }
-
-
-
 
 }

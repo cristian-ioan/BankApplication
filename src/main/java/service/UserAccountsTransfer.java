@@ -11,7 +11,8 @@ public class UserAccountsTransfer {
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
     public void transferMoneyBetweenUserAccounts(User user){
-        int numberUserAccounts = AccountUser.getUserAccountsList(user).size();
+        int numberUserAccounts = user.getAccounts().size();
+
         boolean isConditionForMoneyTransfer = false;
         if (numberUserAccounts == 0){
             LOG.info( user.getUserName() + " does not have any bank account." );
@@ -29,18 +30,17 @@ public class UserAccountsTransfer {
             LOG.info( "Type the number of account (from):" );
             int optionFrom = IOService.getInstance().readInteger();
 
-            BigDecimal balanceFirstAccount = AccountUser.getUserAccountsList(user).get(optionFrom-1).getBalance();
+            BigDecimal balanceFirstAccount = user.getAccounts().get(optionFrom-1).getBalance();
 
-            int indexOfFirstAccount = AccountUser.getUserAccountsList(user).get(optionFrom-1).getId();
-
+            int indexOfFirstAccount = user.getAccounts().get(optionFrom-1).getId();
 
             BigDecimal validateBalanceOfPayment = validateBalanceAccount(balanceFirstAccount);
 
             LOG.info( "Type the number of account (to transfer money):" );
             int optionTo = IOService.getInstance().readInteger();
 
-            BigDecimal balanceSecondAccount = AccountUser.getUserAccountsList(user).get(optionTo-1).getBalance();
-            int indexOfSecondAccount = AccountUser.getUserAccountsList(user).get(optionTo-1).getId();
+            BigDecimal balanceSecondAccount = user.getAccounts().get(optionTo-1).getBalance();
+            int indexOfSecondAccount = user.getAccounts().get(optionTo-1).getId();
 
             BigDecimal toAccount = validateBalanceOfPayment.add(balanceSecondAccount);
             BigDecimal fromAccount= balanceFirstAccount.subtract(validateBalanceOfPayment);

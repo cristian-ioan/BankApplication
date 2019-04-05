@@ -27,11 +27,11 @@ public class AccountCreate {
 
         String currencyTypeOfUserBankAccount = validateCurrencyType();
 
-        int newId = AccountUser.getSizeOfUserAccountList() +1 ;
+        int newId = user.getAccounts().size() +1 ;
+
 
         newAccount = new Account(newId, user.getUserName(),
                 iban, balanceOfUserBankAccount, Currency.valueOf(currencyTypeOfUserBankAccount));
-        AccountUser.getUserAccountsList(user).add(newAccount);
         user.getAccounts().add(newAccount);
         UserAccountInitialization.getInstance().getAccountList().add((newAccount));
 

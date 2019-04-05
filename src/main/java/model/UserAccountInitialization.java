@@ -38,10 +38,6 @@ public class UserAccountInitialization implements UserAccount {
         return accountList;
     }
 
-    public void setAccountList(List<Account> accountList) {
-        this.accountList = accountList;
-    }
-
     @Override
     public void initializeMapUserPassword() throws IOException {
 
