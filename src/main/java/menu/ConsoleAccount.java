@@ -32,7 +32,6 @@ public class ConsoleAccount {
                 break;
             case 2:
                 LOG.info(user.getUserName() + " you are successfully logged out!");
-                user.getAccounts().clear();
                 UserLogin.getInstance().loginUser();
                 break;
             default:
