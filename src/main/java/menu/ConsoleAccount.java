@@ -57,7 +57,6 @@ public class ConsoleAccount {
                 showUserBankAccountConsole(user);
                 break;
             case 3:
-
                 userAccountsTransfer.transferMoneyBetweenUserAccounts(user);
                 break;
             default:
