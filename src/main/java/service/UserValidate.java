@@ -1,7 +1,7 @@
 package service;
 
 import model.User;
-import model.UserAccountInitialization;
+import storage.UserAccountInitialization;
 
 import java.util.Optional;
 

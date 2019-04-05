@@ -4,7 +4,7 @@ import menu.ConsoleMenu;
 import menu.ConsoleAccount;
 import model.Account;
 import model.User;
-import model.UserAccountInitialization;
+import storage.UserAccountInitialization;
 
 import java.io.IOException;
 import java.util.Optional;

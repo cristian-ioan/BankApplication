@@ -3,8 +3,8 @@ package service;
 import file.FileWriter;
 import model.Account;
 import model.User;
-import model.UserAccountInitialization;
-import utils.Currency;
+import storage.UserAccountInitialization;
+import model.Currency;
 
 import java.io.IOException;
 import java.math.BigDecimal;

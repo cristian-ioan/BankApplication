@@ -1,6 +1,6 @@
 package menu;
 
-import model.UserAccountInitialization;
+import storage.UserAccountInitialization;
 import service.UserLogin;
 
 import java.io.IOException;

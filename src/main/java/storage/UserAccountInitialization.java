@@ -1,7 +1,8 @@
-package model;
+package storage;
 
 import file.FileReader;
-import utils.Currency;
+import model.Account;
+import model.Currency;
 import utils.FileUtils;
 
 import java.io.IOException;

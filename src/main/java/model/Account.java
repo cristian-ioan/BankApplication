@@ -1,7 +1,5 @@
 package model;
 
-import utils.Currency;
-
 import java.math.BigDecimal;
 
 public class Account {

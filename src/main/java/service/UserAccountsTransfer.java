@@ -1,8 +1,8 @@
 package service;
 
 import model.Account;
+import model.Currency;
 import model.User;
-import utils.Currency;
 
 import java.math.BigDecimal;
 import java.util.logging.Logger;
@@ -28,6 +28,8 @@ public class UserAccountsTransfer {
                     Currency currencyTypeForSecondAccount = user.getAccounts().get(1).getCurrency();
                     if (!currencyTypeForFirstAccount.equals(currencyTypeForSecondAccount)) {
                         LOG.info("You do not have accounts of the same currency type. Create another one!");
+                    } else {
+                        isConditionForPayment = true;
                     }
                 } else {
                     isConditionForPayment = true;
