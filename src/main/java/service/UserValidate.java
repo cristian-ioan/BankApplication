@@ -1,7 +1,7 @@
 package service;
 
 import model.User;
-import storage.UserAccountInitialization;
+import storage.UserInitializationImpl;
 
 import java.util.Optional;
 
@@ -9,9 +9,9 @@ public class UserValidate {
 
     public Optional<User> searchUser(User user) {
 
-        for (String s : UserAccountInitialization.getInstance().getUserPasswordMap().keySet()) {
+        for (String s : UserInitializationImpl.getInstance().getUserPasswordMap().keySet()) {
             if (s.equals(user.getUserName()) &&
-                    UserAccountInitialization.getInstance().getUserPasswordMap().get(s).equals(user.getUserPassword())) {
+                    UserInitializationImpl.getInstance().getUserPasswordMap().get(s).equals(user.getUserPassword())) {
                 return Optional.of(user);
             }
         }

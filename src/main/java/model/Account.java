@@ -89,6 +89,6 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "id=" + id + ", username='" + username + '\'' + ", accountNumber='" + accountNumber + '\'' + ", balance=" + balance + ", currency=" + currency + '}';
+        return "AccountInitilization{" + "id=" + id + ", username='" + username + '\'' + ", accountNumber='" + accountNumber + '\'' + ", balance=" + balance + ", currency=" + currency + '}';
     }
 }

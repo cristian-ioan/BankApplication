@@ -2,10 +2,8 @@ package storage;
 
 import java.io.IOException;
 
-public interface UserAccount {
+public interface UserInitilization {
 
     void initializeMapUserPassword() throws IOException;
-
-    void initializeAccountList() throws IOException;
 
 }

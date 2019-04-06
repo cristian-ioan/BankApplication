@@ -4,7 +4,7 @@ import menu.ConsoleMenu;
 import menu.ConsoleAccount;
 import model.Account;
 import model.User;
-import storage.UserAccountInitialization;
+import storage.AccountInitilizationImpl;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -14,6 +14,7 @@ public class UserLogin {
 
     private User user;
     private Optional<User> userNameOfAuthenticatedUser;
+    private AccountInitilizationImpl accountInitilizationImpl = new AccountInitilizationImpl();
     private IOService ioService = IOService.getInstance();
     private ConsoleMenu consoleMenu = ConsoleMenu.getInstance();
     private ConsoleAccount consoleAccount = ConsoleAccount.getInstance();
@@ -80,14 +81,15 @@ public class UserLogin {
         }
     }
 
-    private void buildAccountList(User user) {
-        for (Account account : UserAccountInitialization.getInstance().getAccountList()) {
-            if (user.getUserName().equals( account.getUsername() )) {
-                user.getAccounts().add( account );
-            }
+    private void buildAccountList(User user) throws IOException {
+        for(Account account : accountInitilizationImpl.initializeAccountList(user)){
+            user.getAccounts().add(account);
         }
     }
 
-
+    public void clearAccountsList(){
+        accountInitilizationImpl.getAccountList().clear();
+        user.getAccounts().clear();
+    }
 
 }

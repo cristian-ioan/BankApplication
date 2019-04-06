@@ -62,7 +62,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "model.User{" + "userName='" + userName + '\'' + ", userPassword='" + userPassword + '\'' + '}';
+        return "model.UserInitilization{" + "userName='" + userName + '\'' + ", userPassword='" + userPassword + '\'' + '}';
     }
 
 }

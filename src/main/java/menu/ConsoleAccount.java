@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 public class ConsoleAccount {
 
     private static ConsoleAccount instance;
+
     private ConsoleAccount(){}
 
     public static synchronized ConsoleAccount getInstance(){
@@ -32,6 +33,7 @@ public class ConsoleAccount {
                 break;
             case 2:
                 LOG.info(user.getUserName() + " you are successfully logged out!");
+                UserLogin.getInstance().clearAccountsList();
                 UserLogin.getInstance().loginUser();
                 break;
             default:
