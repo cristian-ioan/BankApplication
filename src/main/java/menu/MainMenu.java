@@ -20,7 +20,7 @@ public class MainMenu {
 
     public void showMainMenu() throws IOException {
         LOG.info("Welcome to Bank Application!");
-        userLogin.run();
+        userLogin.goAhead();
     }
 
 }

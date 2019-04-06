@@ -30,13 +30,13 @@ public class UserLogin {
         return instance;
     }
 
-    public void run() throws IOException {
+    public void goAhead() throws IOException {
         if (user == null) {
             loginUser();
         } else {
             consoleAccount.showUserBankAccountConsole(user);
         }
-        run();
+        goAhead();
     }
 
     public void loginUser() throws IOException {
