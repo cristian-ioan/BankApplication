@@ -31,7 +31,7 @@ public class UserLogin {
         return instance;
     }
 
-    public void goAhead() throws IOException {
+    public void goAhead() throws IOException, WrongUserNamePasswordException {
         if (user == null) {
             loginUser();
         } else {
@@ -40,7 +40,7 @@ public class UserLogin {
         goAhead();
     }
 
-    public void loginUser() throws IOException {
+    public void loginUser() throws IOException, WrongUserNamePasswordException {
         user = null;
         consoleMenu.showLoginConsole();
         int option = ioService.readInteger();
@@ -68,15 +68,20 @@ public class UserLogin {
 
     }
 
-    public void displaySearchResultForUser() throws IOException {
+    public void displaySearchResultForUser() throws IOException, WrongUserNamePasswordException {
 
-        if (userNameOfAuthenticatedUser.isPresent()) {
-            LOG.info("Welcome " + userNameOfAuthenticatedUser.get().getUserName() + " !");
-            buildAccountList(user);
-            consoleAccount.showUserBankAccountConsole(user);
-            userNameOfAuthenticatedUser = null;
-        } else {
-            LOG.warning("Wrong username/password");
+        try {
+            if (userNameOfAuthenticatedUser.isPresent()) {
+                LOG.info("Welcome " + userNameOfAuthenticatedUser.get().getUserName() + " !");
+                buildAccountList(user);
+                consoleAccount.showUserBankAccountConsole(user);
+                userNameOfAuthenticatedUser = null;
+            }
+            else {
+                throw new WrongUserNamePasswordException( "Wrong username/password" );
+            }
+        } catch (WrongUserNamePasswordException error){
+            LOG.info( "Exception occured: " + error );
             loginUser();
         }
     }

@@ -1,5 +1,6 @@
 package menu;
 
+import service.WrongUserNamePasswordException;
 import storage.UserInitializationImpl;
 import service.UserLogin;
 
@@ -17,7 +18,7 @@ public class MainMenu {
         userInitializationImpl.initializeMapUserPassword();
     }
 
-    public void showMainMenu() throws IOException {
+    public void showMainMenu() throws IOException, WrongUserNamePasswordException {
         LOG.info("Welcome to Bank Application!");
         userLogin.goAhead();
     }

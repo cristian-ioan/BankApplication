@@ -23,7 +23,7 @@ public class ConsoleAccount {
     private UserAccountsTransfer userAccountsTransfer = new UserAccountsTransfer();
     private static final Logger LOG = Logger.getLogger(Logger.class.getName());
 
-    public void showUserBankAccountConsole(User user) throws IOException {
+    public void showUserBankAccountConsole(User user) throws IOException, WrongUserNamePasswordException {
         ConsoleMenu.getInstance().showAccountConsole();
         int option = IOService.getInstance().readInteger();
 
@@ -43,7 +43,7 @@ public class ConsoleAccount {
         }
     }
 
-    public void createOrDisplayUserBankAccount(User user) throws IOException {
+    public void createOrDisplayUserBankAccount(User user) throws IOException, WrongUserNamePasswordException {
         ConsoleMenu.getInstance().showUserBankAccountConsole(user);
         int option = IOService.getInstance().readInteger();
 

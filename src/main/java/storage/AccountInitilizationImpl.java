@@ -38,7 +38,7 @@ public class AccountInitilizationImpl implements AccountInitilization {
                     String accountNumber = parts[1];
                     BigDecimal balance = new BigDecimal(parts[2]);
                     String currency = parts[3];
-                    model.Account account = new model.Account(id, userName, accountNumber, balance,
+                    Account account = new model.Account(id, userName, accountNumber, balance,
                         Currency.valueOf(currency));
                     accountList.add(account);
                 }

@@ -8,3 +8,4 @@
 
 ### The application allows users to create bank accounts or to display bank accounts associated with that user.
 ### The user can login to the application based on their credentials (username and password).
+### The user can make money transfers between his accounts of the same currency type.
