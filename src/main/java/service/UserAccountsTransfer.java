@@ -17,17 +17,17 @@ public class UserAccountsTransfer {
         boolean isConditionForPayment = false;
 
         if (numberUserAccounts == 0){
-            LOG.info( user.getUserName() + " does not have any bank account." );
+            LOG.warning( user.getUserName() + " does not have any bank account." );
         } else {
             if (numberUserAccounts == 1) {
-                LOG.info( "You have one bank account. Please create another bank account of the same type: "
+                LOG.warning( "You have one bank account. Please create another bank account of the same type: "
                         + user.getAccounts().get( 0 ).getCurrency() );
             } else {
                 if (numberUserAccounts == 2) {
                     Currency currencyTypeForFirstAccount = user.getAccounts().get(0).getCurrency();
                     Currency currencyTypeForSecondAccount = user.getAccounts().get(1).getCurrency();
                     if (!currencyTypeForFirstAccount.equals(currencyTypeForSecondAccount)) {
-                        LOG.info("You do not have accounts of the same currency type. Create another one!");
+                        LOG.warning("You do not have accounts of the same currency type. Create another one!");
                     } else {
                         isConditionForPayment = true;
                     }
@@ -63,7 +63,7 @@ public class UserAccountsTransfer {
             if (continuePayment == true) {
                 makeTransfer(user, optionFrom, indexOfFirstAccount, currencyFirstAccount);
             } else {
-                LOG.info( "You have a single " + currencyFirstAccount + " account. In order to make transfers " +
+                LOG.warning( "You have a single " + currencyFirstAccount + " account. In order to make transfers " +
                         "between accounts, you must create another account of the same currency type." );
             }
         }
@@ -87,7 +87,7 @@ public class UserAccountsTransfer {
             if(currencyFirstAccount.equals( currencySecondAccount )){
                 isConditionForPayment = true;
             } else {
-                LOG.info( "Accounts must have the same currency type." );
+                LOG.warning( "Accounts must have the same currency type." );
             }
         } while (isConditionForPayment == false);
 
@@ -125,7 +125,7 @@ public class UserAccountsTransfer {
         int optionTo = IOService.getInstance().readInteger();
         while (isNumberDiferrent == false){
             if (optionFrom == optionTo){
-                LOG.info( "You cannot make money transfers within the same account. Please type another " +
+                LOG.warning( "You cannot make money transfers within the same account. Please type another " +
                         "number of account (to transfer money):" );
                 optionTo = IOService.getInstance().readInteger();
             } else {

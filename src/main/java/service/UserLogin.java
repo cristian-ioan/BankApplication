@@ -76,12 +76,11 @@ public class UserLogin {
                 buildAccountList(user);
                 consoleAccount.showUserBankAccountConsole(user);
                 userNameOfAuthenticatedUser = null;
-            }
-            else {
+            } else {
                 throw new WrongUserNamePasswordException( "Wrong username/password" );
             }
         } catch (WrongUserNamePasswordException error){
-            LOG.info( "Exception occured: " + error );
+            LOG.warning( "Exception occurred: " + error );
             loginUser();
         }
     }

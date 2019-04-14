@@ -12,7 +12,7 @@ public class DetailsBankAccount {
     public static void showDetailsUserBankAccount(User user) {
 
         if (user.getAccounts().isEmpty()) {
-            LOG.info( user.getUserName() + " does not have any bank account." );
+            LOG.warning( user.getUserName() + " does not have any bank account." );
         } else {
             int currentNumber = 0;
             for (Account account : user.getAccounts()) {
