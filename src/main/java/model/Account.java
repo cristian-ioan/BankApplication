@@ -2,6 +2,19 @@ package model;
 
 import java.math.BigDecimal;
 
+/**
+ * Represents an Account.
+ *
+ * @param id account's id
+ * @param username user's name
+ * @param accountNumber bank account number
+ * @param balance bank account balance
+ * @param currency currency type of bank account
+ *
+ * @author Cristian-Lucian IOAN
+ * @version 1.0
+ * @since   2019-03-21
+ */
 public class Account {
 
     private int id;
@@ -10,6 +23,9 @@ public class Account {
     private BigDecimal balance;
     private Currency currency;
 
+    /**
+     * This constructor creates an account.
+     */
     public Account(int id, String username, String accountNumber, BigDecimal balance, Currency currency) {
         this.id = id;
         this.username = username;

@@ -7,11 +7,35 @@ import model.User;
 import java.math.BigDecimal;
 import java.util.logging.Logger;
 
+/**
+ * Transfers money between user's accounts.
+ *
+ * @param LOG logger
+ *
+ * @author Cristian-Lucian IOAN
+ * @version 1.0
+ * @since   2019-04-03
+ */
 public class UserAccountsTransfer {
 
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
-    public void transferMoneyBetweenUserAccounts(User user){
+    /**
+     * Validates the number of accounts and the currencies type of user's bank accounts
+     *
+     * @param numberUserAccounts number user's bank accounts
+     * @param isConditionForPayment at first I assume there are no conditions for making the payment
+     * @param currencyTypeForFirstAccount currency type of first bank account
+     * @param currencyTypeForSecondAccount currency type of second bank account
+     * @param optionFrom the account number from which the payment is made
+     * @param indexOfFirstAccount the bank account id from which the payment is made
+     *                            (from the list of user's bank accounts)
+     * @param currencyFirstAccount the currency type of indexOfFirstAccount
+     * @param continuePayment validates if there is a bank account with the same currency type
+     *                        as the account from which payment is made
+     *
+     */
+    public void validateNumberAndCurrencyTypeOfUserBankAccounts(User user){
 
         int numberUserAccounts = user.getAccounts().size();
         boolean isConditionForPayment = false;
@@ -69,6 +93,21 @@ public class UserAccountsTransfer {
         }
     }
 
+    /**
+     * Makes transfer money between user's bank accounts.
+     *
+     * @param balanceFirstAccount the balance of the account from which the transfer will be made
+     * @param validateBalanceOfPayment the amount of money that will be withdrawn (from first account)
+     * @param balanceSecondAccount the balance of the account where the transfer will be made
+     * @param indexOfSecondAccount the bank account id where the payment will be made
+     *                             (from the list of user's bank accounts)
+     * @param optionTo the account where the payment is made
+     * @param isConditionForPayment validates if the account where we want to transfer money has the
+     *                              same currency type as the account from we withdraw money
+     * @param newBalanceOfFirstAccount the new balance of the account from which money was withdrawn
+     * @param newBalanceOfSecondAccount the new balance of the account in which money was transferred
+     *
+     */
     public void makeTransfer(User user, int optionFrom,int indexOfFirstAccount, Currency currencyFirstAccount) {
 
         BigDecimal balanceFirstAccount = user.getAccounts().get( optionFrom - 1 ).getBalance();
@@ -91,19 +130,24 @@ public class UserAccountsTransfer {
             }
         } while (isConditionForPayment == false);
 
-        BigDecimal toAccount = validateBalanceOfPayment.add( balanceSecondAccount );
-        BigDecimal fromAccount = balanceFirstAccount.subtract( validateBalanceOfPayment );
+        BigDecimal newBalanceOfFirstAccount = balanceFirstAccount.subtract( validateBalanceOfPayment );
+        BigDecimal newBalanceOfSecondAccount = validateBalanceOfPayment.add( balanceSecondAccount );
 
         for (Account account : user.getAccounts()) {
             if (account.getId() == indexOfFirstAccount) {
-                account.setBalance( fromAccount );
+                account.setBalance( newBalanceOfFirstAccount );
             }
             if (account.getId() == indexOfSecondAccount) {
-                account.setBalance( toAccount );
+                account.setBalance( newBalanceOfSecondAccount );
             }
         }
     }
 
+    /**
+     * Validates if the value that you want to be transferred does not exceed the value available in the user account.
+     *
+     * @return balanceFrom the value that you want to be transferred
+     */
     public BigDecimal validateBalanceAccount(BigDecimal balance){
         boolean isBalanceNotOk = false;
         LOG.info( "Type the balance: " );
@@ -119,6 +163,12 @@ public class UserAccountsTransfer {
         return balanceFrom;
     }
 
+    /**
+     * Validates if the account where you want to transfer the money is the same with the account from which
+     * the transfer is made.
+     *
+     * @return optionTo the account where you want to transfer the money
+     */
     public int validateNumberAccount(int optionFrom){
         boolean isNumberDiferrent = false;
         LOG.info( "Type the number of account (to transfer money):" );

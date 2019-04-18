@@ -3,7 +3,6 @@ package service;
 import file.FileWriter;
 import model.Account;
 import model.User;
-import storage.UserInitializationImpl;
 import model.Currency;
 
 import java.io.IOException;
@@ -11,6 +10,18 @@ import java.math.BigDecimal;
 import java.util.Random;
 import java.util.logging.Logger;
 
+/**
+ * Creates an account for a user.
+ *
+ * @param fileWriter instantiates the FileWriter class
+ * @param newAccount new user account
+ * @param addLineIntoAccountsFile the line that will be added into the file
+ * @param LOG logger
+ *
+ * @author Cristian-Lucian IOAN
+ * @version 1.0
+ * @since   2019-03-26
+ */
 public class AccountCreate {
 
     private FileWriter fileWriter = new FileWriter();
@@ -18,6 +29,15 @@ public class AccountCreate {
     private String addLineIntoAccountsFile;
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
+    /**
+     * Creates the new bank account for the logged user.
+     *
+     * @param iban new user account
+     * @param balanceOfUserBankAccount balance of the new user account
+     * @param currencyTypeOfUserBankAccount currency type of the new user account
+     * @param newId new id for the new user account
+     *
+     */
     public void createUserBankAccount(User user) throws IOException {
         String iban = generateIban();
         LOG.info("Iban: " + iban);
@@ -28,7 +48,6 @@ public class AccountCreate {
         String currencyTypeOfUserBankAccount = validateCurrencyType();
 
         int newId = user.getAccounts().size() +1 ;
-
 
         newAccount = new Account(newId, user.getUserName(),
                 iban, balanceOfUserBankAccount, Currency.valueOf(currencyTypeOfUserBankAccount));
@@ -43,6 +62,11 @@ public class AccountCreate {
         newAccount = null;
     }
 
+    /**
+     * Generates a new bank account(IBAN).
+     *
+     * @return iban the new bank account
+     */
     public String generateIban() {
         Random value = new Random();
         String iban = "RO";
@@ -73,6 +97,11 @@ public class AccountCreate {
         return iban;
     }
 
+    /**
+     * Validates currency type of bank account.
+     *
+     * @return currencyTypeOfUserBankAccount the currency type of account
+     */
     public String validateCurrencyType(){
         LOG.info("Enter currency [RON/EUR]: ");
         String currencyTypeOfUserBankAccount = IOService.getInstance().readLine();

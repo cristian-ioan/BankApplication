@@ -1,5 +1,16 @@
 .idea/
+.file/
+.index-files/
+.menu/
+.model/
+.storage/
+.utils/
+package-list
+.service/
 .idea/modules.xml
 *.iml
+*.html
+*.js
+*.css
 **/target/*
 *.json

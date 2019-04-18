@@ -10,6 +10,25 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+/**
+ * Checks if a user exists in the users file.
+ *
+ * @param user instantiates the User class
+ * @param userNameOfAuthenticatedUser contains the user that was searched in the map of users
+ * @param accountInitilizationImpl instantiates the AccountInitilizationImpl class
+ * @param ioService instantiates the IOService class
+ * @param consoleMenu instantiates the ConsoleMenu class
+ * @param userValidate instantiates the UserValidate class
+ * @param LOG logger
+ * @throws IOException on input error
+ * @throws WrongUserNamePasswordException a custom exception that throws an error message for a wrong user/password
+ *
+ * @author  Cristian-Lucian IOAN
+ * @version 1.0
+ * @since   2019-03-21
+ */
+
+
 public class UserLogin {
 
     private User user;
@@ -18,8 +37,8 @@ public class UserLogin {
     private IOService ioService = IOService.getInstance();
     private ConsoleMenu consoleMenu = ConsoleMenu.getInstance();
     private ConsoleAccount consoleAccount = ConsoleAccount.getInstance();
-    private static final Logger LOG = Logger.getLogger(Logger.class.getName());
     private UserValidate userValidate = new UserValidate();
+    private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
     private static UserLogin instance;
     private UserLogin(){}
@@ -40,6 +59,11 @@ public class UserLogin {
         goAhead();
     }
 
+    /**
+     * Verifies if the username and password entered by you is correct.
+     *
+     * @param option the value read from console
+     */
     public void loginUser() throws IOException, WrongUserNamePasswordException {
         user = null;
         consoleMenu.showLoginConsole();
@@ -68,6 +92,10 @@ public class UserLogin {
 
     }
 
+    /**
+     * Displays the search result for an user. If it is true then we will continue. Otherwise, it displays that
+     * the user and password that was entered is not correct.
+     */
     public void displaySearchResultForUser() throws IOException, WrongUserNamePasswordException {
 
         try {
@@ -85,12 +113,18 @@ public class UserLogin {
         }
     }
 
+    /**
+     * Builds the list of accounts for the logged user.
+     */
     private void buildAccountList(User user) throws IOException {
         for(Account account : accountInitilizationImpl.initializeAccountList(user)){
             user.getAccounts().add(account);
         }
     }
 
+    /**
+     * Clears the list of accounts for the logged user.
+     */
     public void clearAccountsList(){
         accountInitilizationImpl.getAccountList().clear();
         user.getAccounts().clear();
