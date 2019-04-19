@@ -7,6 +7,7 @@ import model.User;
 import storage.AccountInitilizationImpl;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -63,30 +64,37 @@ public class UserLogin {
      * Verifies if the username and password entered by you is correct.
      *
      * @param option the value read from console
+     * @param badOption suppose that a char was typed instead of a digit
      */
     public void loginUser() throws IOException, WrongUserNamePasswordException {
         user = null;
-        consoleMenu.showLoginConsole();
-        int option = ioService.readInteger();
+        boolean badOption = false;
 
-
-        switch (option) {
-            case 1:
-                LOG.info("Enter user name: ");
-                String userName = ioService.readLine();
-                LOG.info("Enter password: ");
-                String userPassword = ioService.readLine();
-                user = new User(userName, userPassword);
-                userNameOfAuthenticatedUser = userValidate.searchUser(user);
-                break;
-            case 2:
-                System.exit(0);
-                break;
-            default:
-                LOG.warning("Not a valid option");
-                loginUser();
-                break;
-        }
+        do {
+            try {
+                consoleMenu.showLoginConsole();
+                int option = ioService.readInteger();
+                switch (option) {
+                    case 1:
+                        LOG.info( "Enter user name: " );
+                        String userName = ioService.readLine();
+                        LOG.info( "Enter password: " );
+                        String userPassword = ioService.readLine();
+                        user = new User( userName, userPassword );
+                        userNameOfAuthenticatedUser = userValidate.searchUser( user );
+                        badOption = true;
+                        break;
+                    case 2:
+                        System.exit( 0 );
+                        break;
+                    default:
+                        LOG.warning( "Not a valid option." );
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                LOG.warning( "Incorrect entry. Please input only integer." );
+            }
+        } while (badOption == false);
 
         displaySearchResultForUser();
 
