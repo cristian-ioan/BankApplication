@@ -28,12 +28,12 @@ public class ConsoleAccount {
      * Displays the bank account's console for an logged user.
      *
      * @param option the value read from console
-     * @param badOption suppose that a char was typed instead of a digit
+     * @param isBadOption suppose that a char was typed instead of a digit
      * @param LOG logger
      */
     public void showUserBankAccountConsole(User user) throws IOException, WrongUserNamePasswordException {
 
-        boolean badOption = false;
+        boolean isBadOption = false;
 
         do {
             try {
@@ -42,13 +42,13 @@ public class ConsoleAccount {
                 switch (option) {
                     case 1:
                         createOrDisplayOrTransferUserBankAccount(user);
-                        badOption = true;
+                        isBadOption = true;
                         break;
                     case 2:
                         LOG.info(user.getUserName() + " you are successfully logged out!");
                         UserLogin.getInstance().clearAccountsList();
                         UserLogin.getInstance().loginUser();
-                        badOption = true;
+                        isBadOption = true;
                         break;
                     default:
                         LOG.warning("Not a valid option.");
@@ -57,7 +57,7 @@ public class ConsoleAccount {
             } catch (InputMismatchException e){
                 LOG.warning( "Incorrect entry. Please input only integer." );
             }
-        } while (badOption == false);
+        } while (isBadOption == false);
 
     }
 
@@ -67,34 +67,35 @@ public class ConsoleAccount {
      * @param accountCreate instance of AccountCreate class
      * @param userAccountsTransfer instance of UserAccountsTransfer class
      * @param option the value read from console
-     * @param badOption suppose that a char was typed instead of a digit
+     * @param isBadOption suppose that a char was typed instead of a digit
      * @param LOG logger
      */
     public void createOrDisplayOrTransferUserBankAccount(User user) throws IOException,
             WrongUserNamePasswordException {
 
-        boolean badOption = false;
+        boolean isBadOption = false;
+        int option = 0;
 
         do{
             try {
                 ConsoleMenu.getInstance().showUserBankAccountConsole(user);
-                int option = IOService.getInstance().readInteger();
+                option = IOService.getInstance().readInteger();
 
                 switch (option) {
                     case 1:
                         LOG.info("Create a new account");
                         accountCreate.createUserBankAccount(user);
                         showUserBankAccountConsole(user);
-                        badOption = true;
+                        isBadOption = true;
                         break;
                     case 2:
                         DetailsBankAccount.showDetailsUserBankAccount(user);
                         showUserBankAccountConsole(user);
-                        badOption = true;
+                        isBadOption = true;
                         break;
                     case 3:
                         userAccountsTransfer.validateNumberAndCurrencyTypeOfUserBankAccounts(user);
-                        badOption = true;
+                        isBadOption = true;
                         break;
                     default:
                         LOG.warning("Not a valid option.");
@@ -103,7 +104,7 @@ public class ConsoleAccount {
             } catch (InputMismatchException e){
                 LOG.warning( "Incorrect entry. Please input only integer." );
             }
-        } while (badOption == false);
+        } while (isBadOption == false);
 
     }
 

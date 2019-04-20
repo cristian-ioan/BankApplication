@@ -5,6 +5,7 @@ import model.Currency;
 import model.User;
 
 import java.math.BigDecimal;
+import java.util.InputMismatchException;
 import java.util.logging.Logger;
 
 public class UserAccountsTransfer {
@@ -53,13 +54,27 @@ public class UserAccountsTransfer {
         }
 
         if (isConditionForPayment == true) {
-            int optionFrom;
+            int optionFrom = 0;
             int indexOfFirstAccount;
 
             LOG.info( "All user bank accounts are:" );
             DetailsBankAccount.showDetailsUserBankAccount( user );
-            LOG.info( "Type the number of account (from) - it must be between 1 and " + numberUserAccounts + ": " );
-            optionFrom = IOService.getInstance().readInteger();
+
+            boolean isBadOption = false;
+            while (isBadOption == false){
+                try {
+                    LOG.info( "Type the number of account (from) - it must be between 1 and " + numberUserAccounts + ": " );
+                    optionFrom = IOService.getInstance().readInteger();
+                    while (optionFrom > numberUserAccounts || optionFrom < 0){
+                        LOG.info( "Type the number of account (from) - it must be between 1 and " + numberUserAccounts + ": " );
+                        optionFrom = IOService.getInstance().readInteger();
+                    }
+                    isBadOption = true;
+                } catch (InputMismatchException e){
+                    LOG.warning( "Incorrect entry. Please input only integer." );
+                    isBadOption = false;
+                }
+            }
 
             indexOfFirstAccount = user.getAccounts().get( optionFrom - 1 ).getId();
             Currency currencyFirstAccount = user.getAccounts().get( optionFrom - 1 ).getCurrency();
@@ -76,7 +91,7 @@ public class UserAccountsTransfer {
             }
 
             if (continuePayment == true) {
-                makeTransfer(user, optionFrom, indexOfFirstAccount, currencyFirstAccount);
+                makeTransfer(user, optionFrom, indexOfFirstAccount, currencyFirstAccount, numberUserAccounts);
             } else {
                 LOG.warning( "You have a single " + currencyFirstAccount + " account. In order to make transfers " +
                         "between accounts, you must create another account of the same currency type." );
@@ -99,7 +114,8 @@ public class UserAccountsTransfer {
      * @param newBalanceOfSecondAccount the new balance of the account in which money was transferred
      * @param LOG logger
      */
-    public void makeTransfer(User user, int optionFrom,int indexOfFirstAccount, Currency currencyFirstAccount) {
+    public void makeTransfer(User user, int optionFrom,int indexOfFirstAccount, Currency currencyFirstAccount,
+                             int numberUserAccounts) {
 
         BigDecimal balanceFirstAccount = user.getAccounts().get( optionFrom - 1 ).getBalance();
 
@@ -110,7 +126,7 @@ public class UserAccountsTransfer {
         int optionTo;
         boolean isConditionForPayment = false;
         do {
-            optionTo = validateNumberAccount( optionFrom );
+            optionTo = validateNumberAccount( optionFrom, numberUserAccounts );
             balanceSecondAccount = user.getAccounts().get( optionTo - 1 ).getBalance();
             indexOfSecondAccount = user.getAccounts().get( optionTo -1 ).getId();
             Currency currencySecondAccount = user.getAccounts().get( optionTo - 1).getCurrency();
@@ -141,17 +157,23 @@ public class UserAccountsTransfer {
      * @return balanceFrom the value that you want to be transferred
      */
     public BigDecimal validateBalanceAccount(BigDecimal balance){
-        boolean isBalanceNotOk = false;
-        LOG.info( "Type the balance: " );
-        BigDecimal balanceFrom = BigDecimal.valueOf(IOService.getInstance().readInteger());
-        while (isBalanceNotOk == false){
-            if (balance.compareTo( balanceFrom ) < 0){
-                LOG.info( "Type a new balance: " );
-                balanceFrom = BigDecimal.valueOf(IOService.getInstance().readInteger());
-            } else {
-                isBalanceNotOk = true;
+        BigDecimal balanceFrom = null;
+        boolean isBadOption = false;
+        while (isBadOption == false)    {
+            try {
+                LOG.info("Enter balance for account: ");
+                balanceFrom = IOService.getInstance().readBigDecimal();
+                while (balance.compareTo(balanceFrom) < 0){
+                    LOG.info("Type a new balance: ");
+                    balanceFrom = IOService.getInstance().readBigDecimal();
+                }
+                isBadOption = true;
+            } catch (InputMismatchException e) {
+               LOG.warning( "Incorrect entry. Please input only integer." );
+               isBadOption = false;
             }
         }
+
         return balanceFrom;
     }
 
@@ -162,19 +184,29 @@ public class UserAccountsTransfer {
      * @param LOG logger
      * @return optionTo the account where you want to transfer the money
      */
-    public int validateNumberAccount(int optionFrom){
-        boolean isNumberDiferrent = false;
-        LOG.info( "Type the number of account (to transfer money):" );
-        int optionTo = IOService.getInstance().readInteger();
-        while (isNumberDiferrent == false){
-            if (optionFrom == optionTo){
-                LOG.warning( "You cannot make money transfers within the same account. Please type another " +
-                        "number of account (to transfer money):" );
+    public int validateNumberAccount(int optionFrom, int numberUserAccounts){
+        int optionTo = 0;
+        boolean isBadOption = false;
+        while (isBadOption == false){
+            try {
+                LOG.info( "Type the number of account (to transfer money): " );
                 optionTo = IOService.getInstance().readInteger();
-            } else {
-                isNumberDiferrent = true;
+                while (optionTo > numberUserAccounts || optionTo < 0){
+                    LOG.info( "Type the number of account (from) - it must be between 1 and " + numberUserAccounts + ": " );
+                    optionTo = IOService.getInstance().readInteger();
+                }
+                if (optionFrom == optionTo){
+                    LOG.warning( "You cannot make money transfers within the same account. Please type another " +
+                        "number of account (to transfer money):" );
+                } else {
+                    isBadOption = true;
+                }
+            } catch (InputMismatchException e){
+                LOG.warning( "Incorrect entry. Please input only integer." );
+                isBadOption = false;
             }
         }
+
         return optionTo;
     }
 

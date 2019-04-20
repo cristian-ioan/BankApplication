@@ -7,6 +7,7 @@ import model.Currency;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -30,11 +31,22 @@ public class AccountCreate {
      * @param LOG logger
      */
     public void createUserBankAccount(User user) throws IOException {
+
         String iban = generateIban();
         LOG.info("Iban: " + iban);
-
-        LOG.info("Enter balance for account: ");
-        BigDecimal balanceOfUserBankAccount = new BigDecimal(IOService.getInstance().readInteger());
+        
+        BigDecimal balanceOfUserBankAccount = null;
+        boolean isBadOption = false;
+        while(isBadOption == false){
+            try{
+                LOG.info("Enter balance for account: ");
+                balanceOfUserBankAccount = IOService.getInstance().readBigDecimal();
+                isBadOption = true;
+            } catch (InputMismatchException e){
+                LOG.warning( "Incorrect entry. Please input only integer." );
+                isBadOption = false;
+            }
+        }
 
         String currencyTypeOfUserBankAccount = validateCurrencyType();
 
@@ -59,6 +71,7 @@ public class AccountCreate {
      * @return iban the new bank account
      */
     public String generateIban() {
+
         Random value = new Random();
         String iban = "RO";
         String swiftCode = "RZBR";
@@ -96,14 +109,35 @@ public class AccountCreate {
      * @return currencyTypeOfUserBankAccount the currency type of account
      */
     public String validateCurrencyType(){
-        LOG.info("Enter currency [RON/EUR]: ");
-        String currencyTypeOfUserBankAccount = IOService.getInstance().readLine();
-        while (!currencyTypeOfUserBankAccount.substring(0, 3).equals(String.valueOf(Currency.RON)) &&
-                !currencyTypeOfUserBankAccount.substring(0, 3).equals(String.valueOf(Currency.EUR))){
-            LOG.warning("The currency must be 'RON' or 'EUR'!");
-            LOG.info("Enter currency [RON/EUR]: ");
-            currencyTypeOfUserBankAccount = IOService.getInstance().readLine();
-        }
+
+        String currencyTypeOfUserBankAccount = null;
+        int option;
+        boolean isBadOption = false;
+
+        do{
+            try {
+                LOG.info("Input 1 for RON or input 2 for EUR: ");
+                option = IOService.getInstance().readInteger();
+
+                switch (option) {
+                    case 1:
+                        currencyTypeOfUserBankAccount = "RON";
+                        isBadOption = true;
+                        break;
+                    case 2:
+                        currencyTypeOfUserBankAccount = "EUR";
+                        isBadOption = true;
+                        break;
+                    default:
+                        LOG.warning("Not a valid option.");
+                        break;
+                }
+            } catch (InputMismatchException e){
+                LOG.warning( "Incorrect entry. Please input 1 for RON or 2 for EUR." );
+            }
+
+        } while (isBadOption == false);
+
         return currencyTypeOfUserBankAccount;
     }
 
