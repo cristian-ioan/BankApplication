@@ -10,18 +10,6 @@ import java.math.BigDecimal;
 import java.util.Random;
 import java.util.logging.Logger;
 
-/**
- * Creates an account for a user.
- *
- * @param fileWriter instantiates the FileWriter class
- * @param newAccount new user account
- * @param addLineIntoAccountsFile the line that will be added into the file
- * @param LOG logger
- *
- * @author Cristian-Lucian IOAN
- * @version 1.0
- * @since   2019-03-26
- */
 public class AccountCreate {
 
     private FileWriter fileWriter = new FileWriter();
@@ -36,7 +24,10 @@ public class AccountCreate {
      * @param balanceOfUserBankAccount balance of the new user account
      * @param currencyTypeOfUserBankAccount currency type of the new user account
      * @param newId new id for the new user account
-     *
+     * @param newAccount new user account
+     * @param addLineIntoAccountsFile the line that will be added into the file
+     * @param fileWriter instantiates the FileWriter class
+     * @param LOG logger
      */
     public void createUserBankAccount(User user) throws IOException {
         String iban = generateIban();
@@ -77,6 +68,8 @@ public class AccountCreate {
         if (r1 == 0){
             if (r2 != 0){
                 iban += "0" + r2 + swiftCode + "000000";
+            } else {
+                iban += "0" + "0" + swiftCode + "000000";
             }
         } else {
             if (r2 == 0){

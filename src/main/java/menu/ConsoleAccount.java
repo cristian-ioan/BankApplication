@@ -7,18 +7,6 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.logging.Logger;
 
-/**
- * Creates a singleton for the console account.
- *
- * @param instance of type ConsoleAccount
- * @param accountCreate instantiates the AccountCreate class
- * @param userAccountsTransfer instantiates the UserAccountsTransfer class
- * @param LOG logger
- *
- * @author Cristian-Lucian IOAN
- * @version 1.0
- * @since   2019-03-21
- */
 public class ConsoleAccount {
 
     private static ConsoleAccount instance;
@@ -37,10 +25,11 @@ public class ConsoleAccount {
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
     /**
-     * Displays the bank account console for an logged user.
+     * Displays the bank account's console for an logged user.
      *
      * @param option the value read from console
      * @param badOption suppose that a char was typed instead of a digit
+     * @param LOG logger
      */
     public void showUserBankAccountConsole(User user) throws IOException, WrongUserNamePasswordException {
 
@@ -73,10 +62,13 @@ public class ConsoleAccount {
     }
 
     /**
-     * Displays the actions then logged user can do for his bank accounts.
+     * Displays the actions than logged user can do for his bank accounts.
      *
+     * @param accountCreate instance of AccountCreate class
+     * @param userAccountsTransfer instance of UserAccountsTransfer class
      * @param option the value read from console
      * @param badOption suppose that a char was typed instead of a digit
+     * @param LOG logger
      */
     public void createOrDisplayOrTransferUserBankAccount(User user) throws IOException,
             WrongUserNamePasswordException {

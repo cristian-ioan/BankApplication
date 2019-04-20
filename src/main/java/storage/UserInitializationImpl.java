@@ -9,23 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-/**
- * Creates the map of users (using singleton).
- *
- * @param instance of type UserInitializationImpl
- * @param fileReader instantiates the FileReader class
- * @param userPasswordMap map of users
- *
- * @author Cristian-Lucian IOAN
- * @version 1.0
- * @since   2019-03-21
- */
 public class UserInitializationImpl implements UserInitilization {
 
     private static UserInitializationImpl instance;
     private FileReader fileReader = new FileReader();
     private  Map<String, String> userPasswordMap = new LinkedHashMap<>();
-
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
     private UserInitializationImpl(){
@@ -45,6 +33,8 @@ public class UserInitializationImpl implements UserInitilization {
     /**
      * Adds users and passwords into the map.
      *
+     * @param fileReader instance of FileReader class
+     * @param userPasswordMap map of users
      * @throws IOException on input error
      */
     @Override

@@ -2,15 +2,6 @@ package service;
 
 import java.util.Scanner;
 
-/**
- * Creates a singleton for input/output services.
- *
- * @param instance of type IOService
- *
- * @author Cristian-Lucian IOAN
- * @version 1.0
- * @since   2019-03-21
- */
 public class IOService {
 
     private static IOService instance;

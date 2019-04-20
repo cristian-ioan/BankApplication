@@ -2,15 +2,6 @@ package menu;
 
 import model.User;
 
-/**
- * Creates a singleton for the console menus.
- *
- * @param instance of type ConsoleMenu
- *
- * @author Cristian-Lucian IOAN
- * @version 1.0
- * @since   2019-03-21
- */
 public class ConsoleMenu {
 
     private static ConsoleMenu instance;
@@ -44,7 +35,7 @@ public class ConsoleMenu {
     }
 
     /**
-     * Displays console for actions then logged user can do for his bank accounts.
+     * Displays console for actions than logged user can do for his bank accounts.
      */
     public void showUserBankAccountConsole(User user){
         System.out.println();

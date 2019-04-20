@@ -7,15 +7,6 @@ import model.User;
 import java.math.BigDecimal;
 import java.util.logging.Logger;
 
-/**
- * Transfers money between user's accounts.
- *
- * @param LOG logger
- *
- * @author Cristian-Lucian IOAN
- * @version 1.0
- * @since   2019-04-03
- */
 public class UserAccountsTransfer {
 
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
@@ -33,7 +24,7 @@ public class UserAccountsTransfer {
      * @param currencyFirstAccount the currency type of indexOfFirstAccount
      * @param continuePayment validates if there is a bank account with the same currency type
      *                        as the account from which payment is made
-     *
+     * @param LOG logger
      */
     public void validateNumberAndCurrencyTypeOfUserBankAccounts(User user){
 
@@ -106,7 +97,7 @@ public class UserAccountsTransfer {
      *                              same currency type as the account from we withdraw money
      * @param newBalanceOfFirstAccount the new balance of the account from which money was withdrawn
      * @param newBalanceOfSecondAccount the new balance of the account in which money was transferred
-     *
+     * @param LOG logger
      */
     public void makeTransfer(User user, int optionFrom,int indexOfFirstAccount, Currency currencyFirstAccount) {
 
@@ -146,6 +137,7 @@ public class UserAccountsTransfer {
     /**
      * Validates if the value that you want to be transferred does not exceed the value available in the user account.
      *
+     * @param LOG logger
      * @return balanceFrom the value that you want to be transferred
      */
     public BigDecimal validateBalanceAccount(BigDecimal balance){
@@ -167,6 +159,7 @@ public class UserAccountsTransfer {
      * Validates if the account where you want to transfer the money is the same with the account from which
      * the transfer is made.
      *
+     * @param LOG logger
      * @return optionTo the account where you want to transfer the money
      */
     public int validateNumberAccount(int optionFrom){

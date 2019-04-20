@@ -3,26 +3,12 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Represents an User.
- *
- * @param username user's name
- * @param userPassword user's password
- * @param accounts list of accounts for an user
- *
- * @author Cristian-Lucian IOAN
- * @version 1.0
- * @since   2019-03-21
- */
 public class User {
 
     private String userName;
     private String userPassword;
     private List<Account> accounts;
 
-    /**
-     * This constructor creates an user with his list of accounts.
-     */
     public User(String userName, String userPassword) {
         this.userName = userName;
         this.userPassword = userPassword;

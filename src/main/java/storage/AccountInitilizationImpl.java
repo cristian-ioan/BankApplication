@@ -12,24 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-/**
- * Creates the list of accounts for an user (using singleton).
- *
- * @param instance of type AccountInitilizationImpl class
- * @param fileReader instantiates the FileReader class
- * @param accountList list of accounts
- * @param LOG logger
- * @throws IOException on input error
- *
- *
- * @author Cristian-Lucian IOAN
- * @version 1.0
- * @since   2019-03-21
- */
 public class AccountInitilizationImpl implements AccountInitilization {
 
     private FileReader fileReader = new FileReader();
-
     private List<Account> accountList = new ArrayList<>();
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
@@ -40,6 +25,9 @@ public class AccountInitilizationImpl implements AccountInitilization {
     /**
      * Adds the accounts of user into the accountlist.
      *
+     * @param fileReader instance of FileReader class
+     * @param accountList list of accounts
+     * @param LOG logger
      * @throws IOException on input error
      * @return list of accounts for an user
      */

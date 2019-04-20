@@ -5,21 +5,14 @@ import model.User;
 
 import java.util.logging.Logger;
 
-/**
- * Displays user's accounts.
- *
- * @param LOG logger
- *
- * @author Cristian-Lucian IOAN
- * @version 1.0
- * @since   2019-03-26
- */
 public class DetailsBankAccount {
 
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
     /**
+     * Displays user's accounts.
      *
+     * @param LOG logger
      */
     public static void showDetailsUserBankAccount(User user) {
 

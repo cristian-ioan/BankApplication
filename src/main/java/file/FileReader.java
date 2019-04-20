@@ -7,15 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-/**
- * Creates a list of strings from a txt file.
- *
- * @param LOG logger
- *
- * @author Cristian-Lucian IOAN
- * @version 1.0
- * @since   2019-03-21
- */
 public class FileReader {
 
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
@@ -25,6 +16,7 @@ public class FileReader {
      *
      * @param lines list of strings
      * @throws IOException on input error
+     * @param LOG logger
      *
      * @return the list of strings
      */
