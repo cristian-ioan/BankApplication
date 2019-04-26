@@ -1,4 +1,4 @@
-package menu;
+package view;
 
 import model.User;
 import service.*;
@@ -10,7 +10,9 @@ import java.util.logging.Logger;
 public class ConsoleAccount {
 
     private static ConsoleAccount instance;
-
+    private AccountCreate accountCreate = new AccountCreate();
+    private AccountsTransfer accountsTransfer = new AccountsTransfer();
+    private AccountService accountService = new AccountService();
     private ConsoleAccount(){}
 
     public static synchronized ConsoleAccount getInstance(){
@@ -20,16 +22,10 @@ public class ConsoleAccount {
         return instance;
     }
 
-    private AccountCreate accountCreate = new AccountCreate();
-    private UserAccountsTransfer userAccountsTransfer = new UserAccountsTransfer();
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
     /**
      * Displays the bank account's console for an logged user.
-     *
-     * @param option the value read from console
-     * @param isBadOption suppose that a char was typed instead of a digit
-     * @param LOG logger
      */
     public void showUserBankAccountConsole(User user) throws IOException, WrongUserNamePasswordException {
 
@@ -46,8 +42,6 @@ public class ConsoleAccount {
                         break;
                     case 2:
                         LOG.info(user.getUserName() + " you are successfully logged out!");
-                        UserLogin.getInstance().clearAccountsList();
-                        UserLogin.getInstance().loginUser();
                         isBadOption = true;
                         break;
                     default:
@@ -63,12 +57,6 @@ public class ConsoleAccount {
 
     /**
      * Displays the actions than logged user can do for his bank accounts.
-     *
-     * @param accountCreate instance of AccountCreate class
-     * @param userAccountsTransfer instance of UserAccountsTransfer class
-     * @param option the value read from console
-     * @param isBadOption suppose that a char was typed instead of a digit
-     * @param LOG logger
      */
     public void createOrDisplayOrTransferUserBankAccount(User user) throws IOException,
             WrongUserNamePasswordException {
@@ -78,7 +66,7 @@ public class ConsoleAccount {
 
         do{
             try {
-                ConsoleMenu.getInstance().showUserBankAccountConsole(user);
+                ConsoleMenu.getInstance().showUserBankAccountConsole();
                 option = IOService.getInstance().readInteger();
 
                 switch (option) {
@@ -89,12 +77,13 @@ public class ConsoleAccount {
                         isBadOption = true;
                         break;
                     case 2:
-                        DetailsBankAccount.showDetailsUserBankAccount(user);
+                        DetailsBankAccount.showDetailsUserBankAccount(accountService.findAllAccountsById(user.getId()));
                         showUserBankAccountConsole(user);
                         isBadOption = true;
                         break;
                     case 3:
-                        userAccountsTransfer.validateNumberAndCurrencyTypeOfUserBankAccounts(user);
+                        accountsTransfer.verifyPayment(accountService.findAllAccountsById(user.getId()));
+                        showUserBankAccountConsole(user);
                         isBadOption = true;
                         break;
                     default:

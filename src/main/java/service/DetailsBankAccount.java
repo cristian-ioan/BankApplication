@@ -1,8 +1,8 @@
 package service;
 
 import model.Account;
-import model.User;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 public class DetailsBankAccount {
@@ -11,23 +11,24 @@ public class DetailsBankAccount {
 
     /**
      * Displays user's accounts.
-     *
-     * @param LOG logger
      */
-    public static void showDetailsUserBankAccount(User user) {
+    public static void showDetailsUserBankAccount(List<Account> account) {
 
-        if (user.getAccounts().isEmpty()) {
-            LOG.warning( user.getUserName() + " does not have any bank account." );
+        if (account.isEmpty()) {
+            LOG.warning( "You don't have any bank account." );
         } else {
             int currentNumber = 0;
-            for (Account account : user.getAccounts()) {
+            for (Account iteratorAccount : account) {
                 currentNumber++;
-                String bankAccountUser = String.valueOf( account.getAccountNumber());
-                String balanceOfUserBankAccount = String.valueOf( account.getBalance() );
-                String currencyType = String.valueOf( account.getCurrency() );
-                LOG.info( "current number: " + currentNumber + " account: " +
-                        bankAccountUser + " balance: " + balanceOfUserBankAccount +
-                        " currency: " + currencyType );
+                String accountNumber = iteratorAccount.getAccount_Number();
+                String accountType = iteratorAccount.getAccount_Type();
+                String balanceOfBankAccount = String.valueOf(iteratorAccount.getBalance());
+                String createTime = String.valueOf( iteratorAccount.getCreatedTime() );
+                String updatedTime = String.valueOf( iteratorAccount.getUpdatedTime() );
+
+                System.out.println( "current number: " + currentNumber + " | account number: " + accountNumber +
+                        " | account type: " + accountType + " | balance: " + balanceOfBankAccount +
+                        " | created time: " + createTime + " | updated time: " + updatedTime );
             }
         }
 

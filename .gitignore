@@ -1,9 +1,9 @@
 .idea/
 .file/
 .index-files/
-.menu/
+.view/
 .model/
-.storage/
+.util/
 .utils/
 package-list
 .service/

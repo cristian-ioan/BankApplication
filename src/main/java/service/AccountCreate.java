@@ -1,74 +1,47 @@
 package service;
 
-import file.FileWriter;
 import model.Account;
 import model.User;
-import model.Currency;
 
-import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.logging.Logger;
 
 public class AccountCreate {
 
-    private FileWriter fileWriter = new FileWriter();
     private Account newAccount;
-    private String addLineIntoAccountsFile;
+    private AccountService accountService = new AccountService();
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
     /**
      * Creates the new bank account for the logged user.
-     *
-     * @param iban new user account
-     * @param balanceOfUserBankAccount balance of the new user account
-     * @param currencyTypeOfUserBankAccount currency type of the new user account
-     * @param newId new id for the new user account
-     * @param newAccount new user account
-     * @param addLineIntoAccountsFile the line that will be added into the file
-     * @param fileWriter instantiates the FileWriter class
-     * @param LOG logger
      */
-    public void createUserBankAccount(User user) throws IOException {
+    public void createUserBankAccount(User user)  {
 
         String iban = generateIban();
         LOG.info("Iban: " + iban);
-        
-        BigDecimal balanceOfUserBankAccount = null;
-        boolean isBadOption = false;
-        while(isBadOption == false){
-            try{
-                LOG.info("Enter balance for account: ");
-                balanceOfUserBankAccount = IOService.getInstance().readBigDecimal();
-                isBadOption = true;
-            } catch (InputMismatchException e){
-                LOG.warning( "Incorrect entry. Please input only integer." );
-                isBadOption = false;
-            }
-        }
 
-        String currencyTypeOfUserBankAccount = validateCurrencyType();
+        BigDecimal balanceAccount = validateBalance();
 
-        int newId = user.getAccounts().size() +1 ;
+        String currencyTypeOfAccount = validateCurrencyType();
 
-        newAccount = new Account(newId, user.getUserName(),
-                iban, balanceOfUserBankAccount, Currency.valueOf(currencyTypeOfUserBankAccount));
-        user.getAccounts().add(newAccount);
+        LocalDateTime createdTime = LocalDateTime.now();
 
-        addLineIntoAccountsFile = "\n" + user.getUserName() + " " + iban + " "
-                + balanceOfUserBankAccount.toString() + " " + currencyTypeOfUserBankAccount;
-        fileWriter.writeStringToFile(addLineIntoAccountsFile);
+        newAccount = new Account(user, iban, currencyTypeOfAccount, balanceAccount, createdTime, createdTime);
+
+        accountService.createAccount(newAccount);
 
         LOG.info("The bank account for " + user.getUserName() + " was successfully created!");
-        addLineIntoAccountsFile = null;
+
         newAccount = null;
     }
 
     /**
      * Generates a new bank account(IBAN).
      *
-     * @return iban the new bank account
+     * @return iban  = the new bank account
      */
     public String generateIban() {
 
@@ -106,11 +79,34 @@ public class AccountCreate {
     /**
      * Validates currency type of bank account.
      *
+     * @return balance of account
+     */
+    public BigDecimal validateBalance(){
+
+        BigDecimal balanceOfBankAccount = null;
+        boolean isBadOption = false;
+        while(isBadOption == false){
+            try{
+                LOG.info("Enter balance for account: ");
+                balanceOfBankAccount = IOService.getInstance().readBigDecimal();
+                isBadOption = true;
+            } catch (InputMismatchException e){
+                LOG.warning( "Incorrect entry. Please input only integer." );
+                isBadOption = false;
+            }
+        }
+        return balanceOfBankAccount;
+
+    }
+
+    /**
+     * Validates currency type of bank account.
+     *
      * @return currencyTypeOfUserBankAccount the currency type of account
      */
     public String validateCurrencyType(){
 
-        String currencyTypeOfUserBankAccount = null;
+        String currencyType = null;
         int option;
         boolean isBadOption = false;
 
@@ -121,11 +117,11 @@ public class AccountCreate {
 
                 switch (option) {
                     case 1:
-                        currencyTypeOfUserBankAccount = "RON";
+                        currencyType = "RON";
                         isBadOption = true;
                         break;
                     case 2:
-                        currencyTypeOfUserBankAccount = "EUR";
+                        currencyType = "EUR";
                         isBadOption = true;
                         break;
                     default:
@@ -138,7 +134,6 @@ public class AccountCreate {
 
         } while (isBadOption == false);
 
-        return currencyTypeOfUserBankAccount;
+        return currencyType;
     }
-
 }

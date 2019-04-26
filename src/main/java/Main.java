@@ -1,20 +1,14 @@
-import menu.MainMenu;
-import service.WrongUserNamePasswordException;
-
-import java.io.IOException;
+import view.MainMenu;
 
 public class Main {
 
     /**
      * Starts an application that simulates a banking application.
-     *
-     * @throws IOException on input error
-     * @throws WrongUserNamePasswordException a custom exception that throws an error message for a wrong user/password
      */
-    public static void main(String[] args) throws IOException, WrongUserNamePasswordException {
+    public static void main(String[] args) {
 
-        MainMenu mainMenu = new MainMenu();
-        mainMenu.showMainMenu();
+       MainMenu mainMenu = new MainMenu();
+       mainMenu.showMainMenu();
 
     }
 

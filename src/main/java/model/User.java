@@ -1,34 +1,62 @@
 package model;
 
-import java.util.ArrayList;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
+@Entity
+@Table(name = "user", schema = "bank-app")
 public class User {
 
-    private String userName;
-    private String userPassword;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @OneToMany(targetEntity = Account.class, mappedBy = "user", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Account> accounts;
 
-    public User(String userName, String userPassword) {
+    @OneToMany(targetEntity = Notification.class, mappedBy = "user", cascade = CascadeType.MERGE,
+            fetch = FetchType.LAZY)
+    private List<Notification> notifications;
+
+    @Column(name="username", length = 16, nullable = false)
+    private String userName;
+
+    @Column(name="password", length = 32, nullable = false)
+    private String password;
+
+    @Column(name = "created_time", length = 8)
+    private LocalDateTime createdTime;
+
+    @Column(name = "updated_time", length = 8)
+    private LocalDateTime updatedTime;
+
+    public User(){}
+
+    public User(long id, String userName, String password){
+        this.id = id;
         this.userName = userName;
-        this.userPassword = userPassword;
-        accounts = new ArrayList<>();
+        this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
+    public User(long id, List<Account> accounts, List<Notification> notifications, String userName, String password,
+                LocalDateTime createdTime, LocalDateTime updatedTime) {
+        this.id = id;
+        this.accounts = accounts;
+        this.notifications = notifications;
         this.userName = userName;
+        this.password = password;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public long getId() {
+        return id;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public List<Account> getAccounts() {
@@ -39,6 +67,46 @@ public class User {
         this.accounts = accounts;
     }
 
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public LocalDateTime getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(LocalDateTime updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,22 +115,37 @@ public class User {
 
         User user = (User) o;
 
+        if (getId() != user.getId()) return false;
+        if (getAccounts() != null ? !getAccounts().equals( user.getAccounts() ) : user.getAccounts() != null)
+            return false;
+        if (getNotifications() != null ? !getNotifications().equals( user.getNotifications() ) : user.getNotifications() != null)
+            return false;
         if (getUserName() != null ? !getUserName().equals( user.getUserName() ) : user.getUserName() != null)
             return false;
-        return getUserPassword() != null ? getUserPassword().equals( user.getUserPassword() ) :
-                user.getUserPassword() == null;
+        if (getPassword() != null ? !getPassword().equals( user.getPassword() ) : user.getPassword() != null)
+            return false;
+        if (getCreatedTime() != null ? !getCreatedTime().equals( user.getCreatedTime() ) : user.getCreatedTime() != null)
+            return false;
+        return getUpdatedTime() != null ? getUpdatedTime().equals( user.getUpdatedTime() ) : user.getUpdatedTime() == null;
+
     }
 
     @Override
     public int hashCode() {
-        int result = getUserName() != null ? getUserName().hashCode() : 0;
-        result = 31 * result + (getUserPassword() != null ? getUserPassword().hashCode() : 0);
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + (getAccounts() != null ? getAccounts().hashCode() : 0);
+        result = 31 * result + (getNotifications() != null ? getNotifications().hashCode() : 0);
+        result = 31 * result + (getUserName() != null ? getUserName().hashCode() : 0);
+        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
+        result = 31 * result + (getCreatedTime() != null ? getCreatedTime().hashCode() : 0);
+        result = 31 * result + (getUpdatedTime() != null ? getUpdatedTime().hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "model.UserInitilization{" + "userName='" + userName + '\'' + ", userPassword='" + userPassword + '\'' + '}';
+        return "User{" + "id=" + id + ", accounts=" + accounts + ", notifications=" +
+                notifications + ", userName='" + userName + '\'' + ", password='" + password + '\'' +
+                ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + '}';
     }
-
 }

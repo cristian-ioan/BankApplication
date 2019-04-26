@@ -40,5 +40,4 @@ public class IOService {
     public String readLine() {
         return new Scanner(System.in).next();
     }
-
 }

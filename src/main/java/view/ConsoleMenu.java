@@ -1,6 +1,4 @@
-package menu;
-
-import model.User;
+package view;
 
 public class ConsoleMenu {
 
@@ -37,11 +35,11 @@ public class ConsoleMenu {
     /**
      * Displays console for actions than logged user can do for his bank accounts.
      */
-    public void showUserBankAccountConsole(User user){
+    public void showUserBankAccountConsole(){
         System.out.println();
-        System.out.println("1. Create a new bank account for: " + user.getUserName());
-        System.out.println("2. Display details about bank accounts for: " + user.getUserName());
-        System.out.println("3. Transfer money between accounts for: " + user.getUserName());
+        System.out.println("1. Create a new bank account");
+        System.out.println("2. Display details about bank accounts");
+        System.out.println("3. Transfer money between accounts");
         System.out.print("Select menu option: ");
     }
 

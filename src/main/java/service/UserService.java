@@ -1,40 +1,28 @@
 package service;
 
-import menu.ConsoleMenu;
-import menu.ConsoleAccount;
-import model.Account;
+import dao.UserDao;
 import model.User;
-import storage.AccountInitilizationImpl;
+import view.*;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-public class UserLogin {
+public class UserService {
 
+    private UserDao userDao = new UserDao();
     private User user;
-    private Optional<User> userNameOfAuthenticatedUser;
-    private AccountInitilizationImpl accountInitilizationImpl = new AccountInitilizationImpl();
-    private IOService ioService = IOService.getInstance();
-    private ConsoleMenu consoleMenu = ConsoleMenu.getInstance();
+    private Optional<User> resultOfUserVerification;
     private ConsoleAccount consoleAccount = ConsoleAccount.getInstance();
-    private UserValidate userValidate = new UserValidate();
+    private ConsoleMenu consoleMenu = ConsoleMenu.getInstance();
+    private IOService ioService = IOService.getInstance();
+
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
-
-    private static UserLogin instance;
-    private UserLogin(){}
-
-    public static synchronized UserLogin getInstance(){
-        if (instance == null){
-            instance = new UserLogin();
-        }
-        return instance;
-    }
 
     public void goAhead() throws IOException, WrongUserNamePasswordException {
         if (user == null) {
-            loginUser();
+            handleUser();
         } else {
             consoleAccount.showUserBankAccountConsole(user);
         }
@@ -44,7 +32,7 @@ public class UserLogin {
     /**
      * Verifies if the username and password entered by you is correct or you can logout.
      *
-     * @param userNameOfAuthenticatedUser contains the user that was searched in the map of users
+     * @param resultOfUserVerification contains the user that was searched
      * @param ioService instance of IOService class
      * @param consoleMenu instance of ConsoleMenu class
      * @param option the value read from console
@@ -53,9 +41,11 @@ public class UserLogin {
      * @throws IOException on input error
      * @throws WrongUserNamePasswordException a custom exception that throws an error message for a wrong user/password
      */
-    public void loginUser() throws IOException, WrongUserNamePasswordException {
+    public void handleUser() throws IOException, WrongUserNamePasswordException {
         user = null;
         boolean badOption = false;
+        long userId = 0;
+        LOG.info( "Welcome to Bank Application!" );
 
         do {
             try {
@@ -67,8 +57,8 @@ public class UserLogin {
                         String userName = ioService.readLine();
                         LOG.info( "Enter password: " );
                         String userPassword = ioService.readLine();
-                        user = new User( userName, userPassword );
-                        userNameOfAuthenticatedUser = userValidate.searchUser( user );
+                        user = new User(1000000000L,userName, userPassword);
+                        resultOfUserVerification = userDao.verifyUserPassword(user);
                         badOption = true;
                         break;
                     case 2:
@@ -91,7 +81,7 @@ public class UserLogin {
      * Displays the search result for an user. If it is true then we will continue. Otherwise, it displays that
      * the user and password that was entered is not correct.
      *
-     * @param userNameOfAuthenticatedUser contains the user that was searched in the map of users
+     * @param resultOfUserVerification contains the user that was searched
      * @param LOG logger
      * @throws IOException on input error
      * @throws WrongUserNamePasswordException a custom exception that throws an error message for a wrong user/password
@@ -99,39 +89,18 @@ public class UserLogin {
     public void displaySearchResultForUser() throws IOException, WrongUserNamePasswordException {
 
         try {
-            if (userNameOfAuthenticatedUser.isPresent()) {
-                LOG.info("Welcome " + userNameOfAuthenticatedUser.get().getUserName() + " !");
-                buildAccountList(user);
+            if (resultOfUserVerification.isPresent()) {
+                LOG.info("Welcome " + resultOfUserVerification.get().getUserName() + " !");
                 consoleAccount.showUserBankAccountConsole(user);
-                userNameOfAuthenticatedUser = null;
+                resultOfUserVerification = null;
+                user = null;
             } else {
                 throw new WrongUserNamePasswordException( "Wrong username/password" );
             }
         } catch (WrongUserNamePasswordException error){
             LOG.warning( "Exception occurred: " + error );
-            loginUser();
+            handleUser();
         }
-    }
-
-    /**
-     * Builds the list of accounts for the logged user.
-     *
-     * @param accountInitilizationImpl instance of AccountInitilizationImpl class
-     */
-    private void buildAccountList(User user) throws IOException {
-        for(Account account : accountInitilizationImpl.initializeAccountList(user)){
-            user.getAccounts().add(account);
-        }
-    }
-
-    /**
-     * Clears the list of accounts for the logged user.
-     *
-     * @param accountInitilizationImpl instance of AccountInitilizationImpl class
-     */
-    public void clearAccountsList(){
-        accountInitilizationImpl.getAccountList().clear();
-        user.getAccounts().clear();
     }
 
 }
