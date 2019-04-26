@@ -2,7 +2,7 @@ package service;
 
 import dao.AccountDao;
 import model.Account;
-import model.Tranzaction;
+import model.Transaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -109,8 +109,8 @@ public class AccountsTransfer {
         String detailsTransaction = IOService.getInstance().readLine();
         LocalDateTime createdTime = LocalDateTime.now();
 
-        Tranzaction tran = null;
-        tran = new Tranzaction( accounts.get(optionTo - 1).getAccount_Number(),validateBalanceOfPayment,
+        Transaction tran = null;
+        tran = new Transaction( accounts.get(optionTo - 1).getAccount_Number(),validateBalanceOfPayment,
                 detailsTransaction, createdTime, accounts.get(optionTo - 1));
 
         accountDao.updateAccountcreateTransaction( accounts, indexOfFirstAccount, indexOfSecondAccount,

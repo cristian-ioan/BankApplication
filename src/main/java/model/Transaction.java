@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transaction", schema = "bank-app")
-public class Tranzaction {
+public class Transaction {
 
     @Id
     @Column(name = "id")
@@ -29,9 +29,9 @@ public class Tranzaction {
     @JoinColumn(name="account_id")
     private Account account;
 
-    public Tranzaction(){}
+    public Transaction(){}
 
-    public Tranzaction(String toAccount, BigDecimal balance, String detail, LocalDateTime createdTime,
+    public Transaction(String toAccount, BigDecimal balance, String detail, LocalDateTime createdTime,
                        Account account){
         this.toAccount = toAccount;
         this.balance = balance;
@@ -40,7 +40,7 @@ public class Tranzaction {
         this.account = account;
     }
 
-    public Tranzaction(long id, String toAccount, BigDecimal balance, String detail, LocalDateTime createdTime,
+    public Transaction(long id, String toAccount, BigDecimal balance, String detail, LocalDateTime createdTime,
                        Account account) {
         this.id = id;
         this.toAccount = toAccount;
@@ -102,9 +102,9 @@ public class Tranzaction {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
-        if (!(o instanceof Tranzaction)) return false;
+        if (!(o instanceof Transaction)) return false;
 
-        Tranzaction that = (Tranzaction) o;
+        Transaction that = (Transaction) o;
 
         if (getId() != that.getId()) return false;
         if (getToAccount() != null ? !getToAccount().equals( that.getToAccount() ) : that.getToAccount() != null)
@@ -130,7 +130,7 @@ public class Tranzaction {
 
     @Override
     public String toString() {
-        return "Tranzaction{" + "id=" + id + ", toAccount='" + toAccount + '\'' + ", balance=" +
+        return "Transaction{" + "id=" + id + ", toAccount='" + toAccount + '\'' + ", balance=" +
                 balance + ", detail='" + detail + '\'' + ", createdTime=" + createdTime + ", account=" + account + '}';
     }
 }

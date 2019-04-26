@@ -1,11 +1,10 @@
 package dao;
 
 import model.Account;
-import model.Tranzaction;
+import model.Transaction;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import service.TranzactionService;
+import service.TransactionService;
 import util.HibernateUtil;
 
 import javax.persistence.Query;
@@ -26,10 +25,10 @@ public class AccountDao extends GenericDao<Account> {
      */
     public void updateAccountcreateTransaction(List<Account> accounts, long indexFirstAccount, long secondAccount,
                                                BigDecimal balanceOfFirstAccount, BigDecimal balanceOfSecondAccount,
-                                               Tranzaction tran){
+                                               Transaction tran){
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-        TranzactionService tranzactionService = new TranzactionService();
+        org.hibernate.Transaction transaction = null;
+        TransactionService transactionService = new TransactionService();
 
         try{
             transaction = session.beginTransaction();
@@ -45,7 +44,7 @@ public class AccountDao extends GenericDao<Account> {
                 }
             }
 
-            tranzactionService.createTransaction( tran );
+            transactionService.createTransaction( tran );
 
             transaction.commit();
         } catch (HibernateException e) {
@@ -61,7 +60,7 @@ public class AccountDao extends GenericDao<Account> {
 
     public List<Account> findAll(){
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
+        org.hibernate.Transaction transaction = session.beginTransaction();
 
         Query query = session.createQuery("FROM model.Account");
 
@@ -79,7 +78,7 @@ public class AccountDao extends GenericDao<Account> {
      */
     public List<Account> findAllAccountsById(long id){
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
+        org.hibernate.Transaction transaction = null;
         List<Account> accountList = null;
 
         try{

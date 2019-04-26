@@ -18,8 +18,8 @@ public class Account {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(targetEntity = Tranzaction.class, mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Tranzaction> tranzactions;
+    @OneToMany(targetEntity = Transaction.class, mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Transaction> transactions;
 
     @Column(name="account_number", length = 50)
     private String account_Number;
@@ -48,11 +48,11 @@ public class Account {
         this.updatedTime = updatedTime;
     }
 
-    public Account(long id, User user, List<Tranzaction> tranzactions, String account_Number, String account_Type,
+    public Account(long id, User user, List<Transaction> transactions, String account_Number, String account_Type,
                    BigDecimal balance, LocalDateTime createdTime, LocalDateTime updatedTime) {
         this.id = id;
         this.user = user;
-        this.tranzactions = tranzactions;
+        this.transactions = transactions;
         this.account_Number = account_Number;
         this.account_Type = account_Type;
         this.balance = balance;
@@ -76,12 +76,12 @@ public class Account {
         this.user = user;
     }
 
-    public List<Tranzaction> getTranzactions() {
-        return tranzactions;
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public void setTranzactions(List<Tranzaction> tranzactions) {
-        this.tranzactions = tranzactions;
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     public String getAccount_Number() {
@@ -134,7 +134,7 @@ public class Account {
 
         if (getId() != account.getId()) return false;
         if (getUser() != null ? !getUser().equals( account.getUser() ) : account.getUser() != null) return false;
-        if (getTranzactions() != null ? !getTranzactions().equals( account.getTranzactions() ) : account.getTranzactions() != null)
+        if (getTransactions() != null ? !getTransactions().equals( account.getTransactions() ) : account.getTransactions() != null)
             return false;
         if (getAccount_Number() != null ? !getAccount_Number().equals( account.getAccount_Number() ) : account.getAccount_Number() != null)
             return false;
@@ -152,7 +152,7 @@ public class Account {
     public int hashCode() {
         int result = (int) (getId() ^ (getId() >>> 32));
         result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
-        result = 31 * result + (getTranzactions() != null ? getTranzactions().hashCode() : 0);
+        result = 31 * result + (getTransactions() != null ? getTransactions().hashCode() : 0);
         result = 31 * result + (getAccount_Number() != null ? getAccount_Number().hashCode() : 0);
         result = 31 * result + (getAccount_Type() != null ? getAccount_Type().hashCode() : 0);
         result = 31 * result + (getBalance() != null ? getBalance().hashCode() : 0);

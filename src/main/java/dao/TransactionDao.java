@@ -1,25 +1,25 @@
 package dao;
 
-import model.Tranzaction;
+import model.Transaction;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
 import javax.persistence.Query;
 import java.util.List;
 
-public class TranzactionDao extends GenericDao<Tranzaction>{
+public class TransactionDao extends GenericDao<Transaction>{
 
-    public void createTransaction(Tranzaction tranzaction){
-        createEntity( tranzaction );
+    public void createTransaction(Transaction transaction){
+        createEntity( transaction );
     }
 
-    public List<Tranzaction> findAll(){
+    public List<Transaction> findAll(){
         Session session = HibernateUtil.getSessionFactory().openSession();
         org.hibernate.Transaction transaction = session.beginTransaction();
 
-        Query query = session.createQuery("FROM model.Tranzaction");
+        Query query = session.createQuery("FROM model.Transaction");
 
-        List<Tranzaction> list = query.getResultList();
+        List<Transaction> list = query.getResultList();
 
         transaction.commit();
         session.close();

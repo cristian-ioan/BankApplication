@@ -21,7 +21,7 @@
         <mapping class="model.User" />
         <mapping class="model.Account" />
         <mapping class="model.Person" />
-        <mapping class="model.Tranzaction" />
+        <mapping class="model.Transaction" />
         <mapping class="model.Notification" />
 
     </session-factory>
