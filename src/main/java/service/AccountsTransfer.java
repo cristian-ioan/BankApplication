@@ -91,11 +91,11 @@ public class AccountsTransfer {
         int optionTo;
         boolean isConditionForPayment = false;
         do {
-            optionTo = validateNumberAccount( optionFrom, numberUserAccounts );
-            balanceSecondAccount = accounts.get( optionTo - 1 ).getBalance();
-            indexOfSecondAccount = accounts.get( optionTo -1 ).getId();
+            optionTo = validateNumberAccount(optionFrom, numberUserAccounts);
+            balanceSecondAccount = accounts.get(optionTo - 1).getBalance();
+            indexOfSecondAccount = accounts.get(optionTo -1).getId();
             String currencySecondAccount = accounts.get( optionTo - 1).getAccount_Type();
-            if(currencyFirstAccount.equals( currencySecondAccount )){
+            if(currencyFirstAccount.equals( currencySecondAccount)){
                 isConditionForPayment = true;
             } else {
                 LOG.warning( "Accounts must have the same currency type." );
@@ -129,10 +129,12 @@ public class AccountsTransfer {
         int optionFrom = 0;
         while (isBadOption == false){
             try {
-                LOG.info( "Type the number of account (from) - it must be between 1 and " + numberUserAccounts + ": " );
+                LOG.info( "Type the number of account (from) - it must be between 1 and " +
+                        numberUserAccounts + ": " );
                 optionFrom = IOService.getInstance().readInteger();
                 while (optionFrom > numberUserAccounts || optionFrom < 0){
-                    LOG.info( "Type the number of account (from) - it must be between 1 and " + numberUserAccounts + ": " );
+                    LOG.info( "Type the number of account (from) - it must be between 1 and " +
+                            numberUserAccounts + ": " );
                     optionFrom = IOService.getInstance().readInteger();
                 }
                 isBadOption = true;
@@ -155,7 +157,7 @@ public class AccountsTransfer {
                 LOG.info("Enter balance for account: ");
                 balanceFrom = IOService.getInstance().readBigDecimal();
                 while (balance.compareTo(balanceFrom) < 0){
-                    LOG.info("Type a new balance: ");
+                    LOG.info("The value entered is higher than the existing balance. Type a new balance: ");
                     balanceFrom = IOService.getInstance().readBigDecimal();
                 }
                 isBadOption = true;
@@ -164,7 +166,6 @@ public class AccountsTransfer {
                 isBadOption = false;
             }
         }
-
         return balanceFrom;
     }
 
@@ -180,7 +181,8 @@ public class AccountsTransfer {
                 LOG.info( "Type the number of account (to transfer money): " );
                 optionTo = IOService.getInstance().readInteger();
                 while (optionTo > numberUserAccounts || optionTo < 0){
-                    LOG.info( "Type the number of account (from) - it must be between 1 and " + numberUserAccounts + ": " );
+                    LOG.info( "Type the number of account (from) - it must be between 1 and " +
+                            numberUserAccounts + ": " );
                     optionTo = IOService.getInstance().readInteger();
                 }
                 if (optionFrom == optionTo){
@@ -194,7 +196,6 @@ public class AccountsTransfer {
                 isBadOption = false;
             }
         }
-
         return optionTo;
     }
 

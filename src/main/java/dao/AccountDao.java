@@ -9,6 +9,7 @@ import util.HibernateUtil;
 
 import javax.persistence.Query;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDao extends GenericDao<Account> {
@@ -79,7 +80,7 @@ public class AccountDao extends GenericDao<Account> {
     public List<Account> findAllAccountsById(long id){
         Session session = HibernateUtil.getSessionFactory().openSession();
         org.hibernate.Transaction transaction = null;
-        List<Account> accountList = null;
+        List<Account> accountList = new ArrayList<>();
 
         try{
             transaction = session.beginTransaction();
@@ -96,7 +97,6 @@ public class AccountDao extends GenericDao<Account> {
         } finally {
             session.close();
         }
-
         return accountList;
     }
 

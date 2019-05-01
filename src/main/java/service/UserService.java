@@ -57,7 +57,7 @@ public class UserService {
                         String userName = ioService.readLine();
                         LOG.info( "Enter password: " );
                         String userPassword = ioService.readLine();
-                        user = new User(1000000000L,userName, userPassword);
+                        user = new User(0L,userName, userPassword);
                         resultOfUserVerification = userDao.verifyUserPassword(user);
                         badOption = true;
                         break;

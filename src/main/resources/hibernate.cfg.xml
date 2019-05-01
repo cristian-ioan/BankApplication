@@ -6,13 +6,16 @@
 <hibernate-configuration>
     <session-factory>
 
+        <!-- JDBC Database connection setings -->
         <property name="connection.driver.class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/bank-app</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/bank-app?useSSL=false&amp;serverTimezone=UTC</property>
         <property name="connection.username">root</property>
         <property name="connection.password">password</property>
 
+        <!-- Select SQL dialect -->
         <property name="dialect">org.hibernate.dialect.MySQL57Dialect</property>
 
+        <!-- Echo the SQL to stdout -->
         <property name="show_sql">true</property>
 
         <property name="hbm2ddl.auto">update</property>

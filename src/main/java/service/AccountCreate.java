@@ -65,13 +65,10 @@ public class AccountCreate {
             }
         }
 
-        int count = 0;
         int n;
         for (int i = 0; i < 10; i++) {
             n = value.nextInt( 10 );
             iban += Integer.toString(n) ;
-            count++;
-
         }
         return iban;
     }
