@@ -32,25 +32,6 @@ public class User {
     @Column(name = "updated_time", length = 8)
     private LocalDateTime updatedTime;
 
-    public User(){}
-
-    public User(long id, String userName, String password){
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-    }
-
-    public User(long id, List<Account> accounts, List<Notification> notifications, String userName, String password,
-                LocalDateTime createdTime, LocalDateTime updatedTime) {
-        this.id = id;
-        this.accounts = accounts;
-        this.notifications = notifications;
-        this.userName = userName;
-        this.password = password;
-        this.createdTime = createdTime;
-        this.updatedTime = updatedTime;
-    }
-
     public long getId() {
         return id;
     }

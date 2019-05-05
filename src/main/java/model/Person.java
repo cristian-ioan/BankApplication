@@ -24,14 +24,6 @@ public class Person {
     @Column(name = "last_name", length = 16)
     private String lastName;
 
-    public Person(long id, User user, String address, String firstName, String lastName) {
-        this.id = id;
-        this.user = user;
-        this.address = address;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
     public long getId() {
         return id;
     }

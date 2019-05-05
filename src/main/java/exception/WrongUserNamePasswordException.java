@@ -1,4 +1,4 @@
-package service;
+package exception;
 
 public class WrongUserNamePasswordException extends Exception {
 

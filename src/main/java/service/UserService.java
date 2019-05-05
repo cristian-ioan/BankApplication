@@ -1,6 +1,9 @@
 package service;
 
 import dao.UserDao;
+import exception.BalanceException;
+import exception.DetailsAccountException;
+import exception.WrongUserNamePasswordException;
 import model.User;
 import view.*;
 
@@ -20,7 +23,7 @@ public class UserService {
 
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
-    public void goAhead() throws IOException, WrongUserNamePasswordException {
+    public void goAhead() throws IOException, WrongUserNamePasswordException, BalanceException, DetailsAccountException {
         if (user == null) {
             handleUser();
         } else {
@@ -41,7 +44,7 @@ public class UserService {
      * @throws IOException on input error
      * @throws WrongUserNamePasswordException a custom exception that throws an error message for a wrong user/password
      */
-    public void handleUser() throws IOException, WrongUserNamePasswordException {
+    public void handleUser() throws IOException, WrongUserNamePasswordException, BalanceException, DetailsAccountException {
         user = null;
         boolean badOption = false;
         long userId = 0;
@@ -57,8 +60,7 @@ public class UserService {
                         String userName = ioService.readLine();
                         LOG.info( "Enter password: " );
                         String userPassword = ioService.readLine();
-                        user = new User(0L,userName, userPassword);
-                        resultOfUserVerification = userDao.verifyUserPassword(user);
+                        resultOfUserVerification = userDao.verifyUserPassword(userName, userPassword);
                         badOption = true;
                         break;
                     case 2:
@@ -86,10 +88,12 @@ public class UserService {
      * @throws IOException on input error
      * @throws WrongUserNamePasswordException a custom exception that throws an error message for a wrong user/password
      */
-    public void displaySearchResultForUser() throws IOException, WrongUserNamePasswordException {
+    public void displaySearchResultForUser() throws IOException, WrongUserNamePasswordException,
+            BalanceException, DetailsAccountException{
 
         try {
             if (resultOfUserVerification.isPresent()) {
+                user = resultOfUserVerification.get();
                 LOG.info("Welcome " + resultOfUserVerification.get().getUserName() + " !");
                 consoleAccount.showUserBankAccountConsole(user);
                 resultOfUserVerification = null;

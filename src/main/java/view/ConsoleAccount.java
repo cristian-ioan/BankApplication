@@ -1,7 +1,11 @@
 package view;
 
+import exception.BalanceException;
+import exception.DetailsAccountException;
+import exception.WrongUserNamePasswordException;
 import model.User;
 import service.*;
+import util.DetailsBankAccount;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
@@ -10,7 +14,6 @@ import java.util.logging.Logger;
 public class ConsoleAccount {
 
     private static ConsoleAccount instance;
-    private AccountCreate accountCreate = new AccountCreate();
     private AccountsTransfer accountsTransfer = new AccountsTransfer();
     private AccountService accountService = new AccountService();
     private ConsoleAccount(){}
@@ -27,7 +30,8 @@ public class ConsoleAccount {
     /**
      * Displays the bank account's console for an logged user.
      */
-    public void showUserBankAccountConsole(User user) throws IOException, WrongUserNamePasswordException {
+    public void showUserBankAccountConsole(User user) throws IOException, WrongUserNamePasswordException,
+            BalanceException, DetailsAccountException {
 
         boolean isBadOption = false;
 
@@ -59,7 +63,7 @@ public class ConsoleAccount {
      * Displays the actions than logged user can do for his bank accounts.
      */
     public void createOrDisplayOrTransferUserBankAccount(User user) throws IOException,
-            WrongUserNamePasswordException {
+            WrongUserNamePasswordException, BalanceException, DetailsAccountException {
 
         boolean isBadOption = false;
         int option = 0;
@@ -72,7 +76,7 @@ public class ConsoleAccount {
                 switch (option) {
                     case 1:
                         LOG.info("Create a new account");
-                        accountCreate.createUserBankAccount(user);
+                        accountService.createUserBankAccount(user);
                         showUserBankAccountConsole(user);
                         isBadOption = true;
                         break;

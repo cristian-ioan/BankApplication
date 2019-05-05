@@ -25,14 +25,6 @@ public class Notification {
     @Column(name = "sent_time", length = 8)
     private LocalDateTime sentTime;
 
-    public Notification(long id, User user, String detail, LocalDateTime createdTime, LocalDateTime sentTime) {
-        this.id = id;
-        this.user = user;
-        this.detail = detail;
-        this.createdTime = createdTime;
-        this.sentTime = sentTime;
-    }
-
     public long getId() {
         return id;
     }

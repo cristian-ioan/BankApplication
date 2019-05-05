@@ -40,16 +40,6 @@ public class Transaction {
         this.account = account;
     }
 
-    public Transaction(long id, String toAccount, BigDecimal balance, String detail, LocalDateTime createdTime,
-                       Account account) {
-        this.id = id;
-        this.toAccount = toAccount;
-        this.balance = balance;
-        this.detail = detail;
-        this.createdTime = createdTime;
-        this.account = account;
-    }
-
     public long getId() {
         return id;
     }

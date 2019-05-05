@@ -48,18 +48,6 @@ public class Account {
         this.updatedTime = updatedTime;
     }
 
-    public Account(long id, User user, List<Transaction> transactions, String account_Number, String account_Type,
-                   BigDecimal balance, LocalDateTime createdTime, LocalDateTime updatedTime) {
-        this.id = id;
-        this.user = user;
-        this.transactions = transactions;
-        this.account_Number = account_Number;
-        this.account_Type = account_Type;
-        this.balance = balance;
-        this.createdTime = createdTime;
-        this.updatedTime = updatedTime;
-    }
-
     public long getId() {
         return id;
     }

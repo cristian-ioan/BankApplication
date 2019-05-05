@@ -31,7 +31,7 @@ public class UserDao extends GenericDao<User>{
         }
     }
 
-    public Optional<User> verifyUserPassword(User user){
+    public Optional<User> verifyUserPassword(String username, String password){
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
 
@@ -39,10 +39,9 @@ public class UserDao extends GenericDao<User>{
             transaction = session.beginTransaction();
             List<User> users = session.createQuery("FROM User").list();
             for(User iteratorUser : users){
-                if(user.getUserName().equals(iteratorUser.getUserName())&&
-                        user.getPassword().equals(iteratorUser.getPassword())) {
-                    user.setId(iteratorUser.getId());
-                    return Optional.of(user);
+                if(username.equals(iteratorUser.getUserName())&&
+                        password.equals(iteratorUser.getPassword())) {
+                    return Optional.of(iteratorUser);
                 }
             }
             transaction.commit();
