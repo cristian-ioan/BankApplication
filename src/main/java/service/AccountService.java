@@ -4,8 +4,8 @@ import dao.AccountDao;
 import exception.BalanceException;
 import model.Account;
 import model.User;
-import validation.ValidationAccount;
-import util.IbanGenerator;
+import validation.AccountValidator;
+import util.IbanGeneratorUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ public class AccountService {
 
     private AccountDao accountDao = new AccountDao();
     private Account newAccount;
-    private ValidationAccount validationAccount = new ValidationAccount();
+    private AccountValidator accountValidator = new AccountValidator();
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
     public void createAccount(Account account){
@@ -44,12 +44,12 @@ public class AccountService {
      */
     public void createUserBankAccount(User user)  throws BalanceException {
 
-        String iban = IbanGenerator.generateIban();
+        String iban = IbanGeneratorUtils.generateIban();
         LOG.info("Iban: " + iban);
 
-        BigDecimal balanceAccount = validationAccount.validateBalance();
+        BigDecimal balanceAccount = accountValidator.validateBalance();
 
-        String currencyTypeOfAccount = validationAccount.validateCurrencyType();
+        String currencyTypeOfAccount = accountValidator.validateCurrencyType();
 
         LocalDateTime createdTime = LocalDateTime.now();
 

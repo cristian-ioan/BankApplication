@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.InputMismatchException;
 import java.util.logging.Logger;
 
-public class ValidationAccount {
+public class AccountValidator {
 
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
@@ -62,7 +62,7 @@ public class ValidationAccount {
                 LOG.warning( "Incorrect entry. Please input 1 for RON or 2 for EUR." );
             }
 
-        } while (isBadOption == false);
+        } while (!isBadOption);
 
         return currencyType;
     }

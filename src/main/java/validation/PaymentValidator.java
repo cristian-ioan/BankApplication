@@ -6,20 +6,20 @@ import java.math.BigDecimal;
 import java.util.InputMismatchException;
 import java.util.logging.Logger;
 
-public class ValidationPayment {
+public class PaymentValidator {
 
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
     /**
      * Validates the account number
      *
-     * @param numberUserAccounts
-     * @return
+     * @param numberUserAccounts validates the account number that we enter from the console
+     * @return the id of account
      */
     public int validateOptionFrom(int numberUserAccounts){
         boolean isBadOption = false;
         int optionFrom = 0;
-        while (isBadOption == false){
+        while (!isBadOption){
             try {
                 LOG.info( "Type the number of account (from) - it must be between 1 and " +
                         numberUserAccounts + ": " );
@@ -44,7 +44,7 @@ public class ValidationPayment {
     public BigDecimal validateBalanceAccount(BigDecimal balance){
         BigDecimal balanceFrom = null;
         boolean isBadOption = false;
-        while (isBadOption == false)    {
+        while (!isBadOption)    {
             try {
                 LOG.info("Enter balance for account: ");
                 balanceFrom = IOService.getInstance().readBigDecimal();
@@ -68,7 +68,7 @@ public class ValidationPayment {
     public int validateNumberAccount(int optionFrom, int numberUserAccounts){
         int optionTo = 0;
         boolean isBadOption = false;
-        while (isBadOption == false){
+        while (!isBadOption){
             try {
                 LOG.info( "Type the number of account (to transfer money): " );
                 optionTo = IOService.getInstance().readInteger();

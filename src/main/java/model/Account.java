@@ -18,7 +18,7 @@ public class Account {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(targetEntity = Transaction.class, mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Transaction.class, mappedBy = "account", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Transaction> transactions;
 
     @Column(name="account_number", length = 50)

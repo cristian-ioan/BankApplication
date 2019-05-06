@@ -5,7 +5,7 @@ import exception.DetailsAccountException;
 import model.Account;
 import model.Transaction;
 import util.DetailsBankAccount;
-import validation.ValidationPayment;
+import validation.PaymentValidator;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class AccountsTransfer {
 
     private AccountDao accountDao = new AccountDao();
-    private ValidationPayment validationPayment = new ValidationPayment();
+    private PaymentValidator paymentValidator = new PaymentValidator();
     private final static Logger LOG = Logger.getLogger(Logger.class.getName());
 
     /**
@@ -47,21 +47,21 @@ public class AccountsTransfer {
             }
         }
 
-        if (isConditionForPayment == true) {
+        if (isConditionForPayment) {
             int optionFrom = 0;
             long indexOfFirstAccount;
 
             LOG.info( "All user bank accounts are:" );
             DetailsBankAccount.showDetailsUserBankAccount(accounts);
 
-            optionFrom = validationPayment.validateOptionFrom(numberUserAccounts);
+            optionFrom = paymentValidator.validateOptionFrom(numberUserAccounts);
 
             indexOfFirstAccount = accounts.get( optionFrom - 1 ).getId();
             String currencyFirstAccount = accounts.get( optionFrom - 1 ).getAccount_Type();
 
             boolean continuePayment = false;
             for (Account account : accounts) {
-                if (continuePayment == false){
+                if (!continuePayment){
                     if ((indexOfFirstAccount != account.getId()) && (currencyFirstAccount.equals(account.getAccount_Type()))) {
                         continuePayment = true;
                     } else {
@@ -70,7 +70,7 @@ public class AccountsTransfer {
                 }
             }
 
-            if (continuePayment == true) {
+            if (continuePayment) {
                 makeTransfer(accounts, optionFrom, indexOfFirstAccount, currencyFirstAccount, numberUserAccounts);
             } else {
                 LOG.warning( "You have a single " + currencyFirstAccount + " account. In order to make transfers " +
@@ -87,14 +87,14 @@ public class AccountsTransfer {
 
         BigDecimal balanceFirstAccount = accounts.get(optionFrom - 1).getBalance();
 
-        BigDecimal validateBalanceOfPayment = validationPayment.validateBalanceAccount( balanceFirstAccount );
+        BigDecimal validateBalanceOfPayment = paymentValidator.validateBalanceAccount( balanceFirstAccount );
 
         BigDecimal balanceSecondAccount;
         long indexOfSecondAccount;
         int optionTo;
         boolean isConditionForPayment = false;
         do {
-            optionTo = validationPayment.validateNumberAccount(optionFrom, numberUserAccounts);
+            optionTo = paymentValidator.validateNumberAccount(optionFrom, numberUserAccounts);
             balanceSecondAccount = accounts.get(optionTo - 1).getBalance();
             indexOfSecondAccount = accounts.get(optionTo -1).getId();
             String currencySecondAccount = accounts.get( optionTo - 1).getAccount_Type();
@@ -103,7 +103,7 @@ public class AccountsTransfer {
             } else {
                 LOG.warning( "Accounts must have the same currency type." );
             }
-        } while (isConditionForPayment == false);
+        } while (!isConditionForPayment);
 
         BigDecimal newBalanceOfFirstAccount = balanceFirstAccount.subtract( validateBalanceOfPayment );
         BigDecimal newBalanceOfSecondAccount = validateBalanceOfPayment.add( balanceSecondAccount );
@@ -112,7 +112,7 @@ public class AccountsTransfer {
         String detailsTransaction = IOService.getInstance().readLine();
         LocalDateTime createdTime = LocalDateTime.now();
 
-        Transaction tran = null;
+        Transaction tran;
         tran = new Transaction( accounts.get(optionTo - 1).getAccount_Number(),validateBalanceOfPayment,
                 detailsTransaction, createdTime, accounts.get(optionTo - 1));
 

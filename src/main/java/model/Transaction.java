@@ -25,7 +25,7 @@ public class Transaction {
     @Column(name = "created_time", length = 8)
     private LocalDateTime createdTime;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name="account_id")
     private Account account;
 

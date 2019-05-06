@@ -2,14 +2,16 @@ package util;
 
 import java.util.Random;
 
-public class IbanGenerator {
+public final class IbanGeneratorUtils {
+
+    private IbanGeneratorUtils(){};
 
     /**
      * Generates a new bank account(IBAN).
      *
      * @return iban  = the new bank account
      */
-    public static String generateIban() {
+    public static final String generateIban() {
 
         Random value = new Random();
         String iban = "RO";

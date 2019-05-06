@@ -55,7 +55,7 @@ public class ConsoleAccount {
             } catch (InputMismatchException e){
                 LOG.warning( "Incorrect entry. Please input only integer." );
             }
-        } while (isBadOption == false);
+        } while (!isBadOption);
 
     }
 
@@ -97,7 +97,7 @@ public class ConsoleAccount {
             } catch (InputMismatchException e){
                 LOG.warning( "Incorrect entry. Please input only integer." );
             }
-        } while (isBadOption == false);
+        } while (!isBadOption);
 
     }
 
