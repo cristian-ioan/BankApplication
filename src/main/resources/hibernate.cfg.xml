@@ -21,11 +21,11 @@
         <property name="hbm2ddl.auto">update</property>
 
         <property name="current_session_context_class">thread</property>
-        <mapping class="model.User" />
-        <mapping class="model.Account" />
-        <mapping class="model.Person" />
-        <mapping class="model.Transaction" />
-        <mapping class="model.Notification" />
+        <mapping class="com.banking.model.User" />
+        <mapping class="com.banking.model.Account" />
+        <mapping class="com.banking.model.Person" />
+        <mapping class="com.banking.model.Transaction" />
+        <mapping class="com.banking.model.Notification" />
 
     </session-factory>
 </hibernate-configuration>

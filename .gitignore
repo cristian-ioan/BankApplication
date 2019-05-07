@@ -1,12 +1,12 @@
 .idea/
 .file/
 .index-files/
-.view/
-.model/
-.util/
+.com.banking.view/
+.com.banking.model/
+.com.banking.util/
 .utils/
 package-list
-.service/
+.com.banking.service/
 .idea/modules.xml
 *.iml
 *.html
