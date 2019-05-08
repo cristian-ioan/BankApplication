@@ -122,8 +122,9 @@ public class AccountsTransfer {
                 accounts.get(optionFrom - 1));
 
         LocalDateTime sentTime = LocalDateTime.now();
-        String standardNotification = "Transaction made: ";
-        String detailsNotification = standardNotification.concat(detailsTransaction);
+        String detailsNotification = "From: ".concat(accounts.get(optionFrom-1).getAccount_Number()).
+                concat(" To: ").concat(accounts.get(optionTo-1).getAccount_Number()).concat(" amount: ").
+                concat(String.valueOf(validateBalanceOfPayment)).concat(" -> ").concat(detailsTransaction);
         Notification notification = new Notification(accounts.get(optionTo - 1).getUser(), detailsNotification,
                 createdTime, sentTime);
 

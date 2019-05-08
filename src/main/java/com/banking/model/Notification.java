@@ -16,7 +16,7 @@ public class Notification {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name="details", length = 50)
+    @Column(name="details", length = 200)
     private String details;
 
     @Column(name = "created_time", length = 8)
